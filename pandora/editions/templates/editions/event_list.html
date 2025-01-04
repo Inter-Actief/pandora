@@ -1,0 +1,50 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Events{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Events'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Is hidden</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in events %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ event.name }}</td>
+                                    <td>{{ event.start|date:'j M H:i' }}</td>
+                                    <td>{{ event.end|date:'j M H:i' }}</td>
+                                    <td>{{ event.is_hidden|yesno:'Yes,No' }}</td>
+                                    <td class="py-1">
+                                        {% bootstrap_button button_type='link' href=event.get_absences_url content='Absences' %}
+                                        {% bootstrap_button button_type='link' href=event.get_attendance_url content='Attendance' %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="5" class="fst-italic">No events available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

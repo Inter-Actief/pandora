@@ -1,0 +1,59 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Kills{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Kills'|colour_first_letter }}</h3>
+
+                <ul class="nav nav-pills my-3">
+                    {% for day in edition.ordered_days %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'kills' year=edition.year day_number=day.number %}" href="{% url 'kills' year=edition.year day_number=day.number %}">
+                                Day {{ day.number }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if kills.exists %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Time</th>
+                                <th>Killer team</th>
+                                <th>Killer team member</th>
+                                <th>Victim team</th>
+                                <th>Victim team member</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for kill in kills %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ kill.created_at|date:'l j F H:i' }}</td>
+                                    <td>{{ kill.killer.team.name }}</td>
+                                    <td>{{ kill.killer.name }}</td>
+                                    <td>{{ kill.victim.team.name }}</td>
+                                    <td>{{ kill.victim.name }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="fst-italic">No kills available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

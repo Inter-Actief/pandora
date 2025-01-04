@@ -1,0 +1,13 @@
+{% extends 'page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/signup_closed.html #}
+
+{% load util %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Sign Up'|colour_first_letter }}</h3>
+
+    <p>We are sorry, but sign up is currently closed.</p>
+{% endblock %}

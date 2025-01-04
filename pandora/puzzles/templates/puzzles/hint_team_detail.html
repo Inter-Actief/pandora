@@ -1,0 +1,107 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Hint{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Hint'|colour_first_letter }}</h3>
+
+    <section class="my-4">
+        <h4>{{ 'Request'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th>Time</th>
+                        <td>{{ hint.created_at|date:'l j F H:i' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Team</th>
+                        <td>{{ hint.team.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone number</th>
+                        <td>
+                            {% if hint.phone_number %}
+                                {{ hint.phone_number }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Puzzle</th>
+                        <td>
+                            {% call hint.code 'get_found_for_team' hint.team as found %}
+
+                            Day {{ hint.code.day.number }}
+                            -
+                            Puzzle {{ hint.code.number }}
+                            -
+                            {% if found %}
+                                {{ hint.code.puzzle.name }}
+                            {% else %}
+                                ?
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Comment</th>
+                        <td>{{ hint.comment }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="my-4">
+        <h4>{{ 'Response'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ hint.get_status_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>Score</th>
+                        <td>
+                            {{ hint.score }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Committee member</th>
+                        <td>
+                            {% if hint.committee_member %}
+                                {{ hint.committee_member.user.get_full_name }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Committee comment</th>
+                        <td>
+                            {% if hint.committee_comment %}
+                                {{ hint.committee_comment }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        {% url 'dashboard' year=edition.year as dashboard_url %}
+        {% bootstrap_button button_type='link' href=dashboard_url content='View dashboard' %}
+
+        {% if hint.status == 'WAITING' %}
+            {% bootstrap_button button_type='link' button_class='btn-danger' href=hint.get_team_cancel_url content='Cancel hint request' %}
+        {% endif %}
+    </section>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'page/rows.html' %}
+
+{% load static %}
+{% load util %}
+
+{% block title %}Gameplay{% endblock %}
+{% block page_title %}{{ 'Gameplay'|colour_first_letter }}{% endblock %}
+
+{% block rows %}
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-body">
+                Pandora is a puzzle game that is played on the campus of the University of Twente. Teams get five days to earn as many points as possible.
+                To give new players some insight in how Pandora is played a short explanation of the gameplay is given below.
+            </div>
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-7 mb-2 mb-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Meetings'|colour_first_letter }}</h2>
+                    <p>
+                        Every evening a meeting is held. During the meetings a story will be told with a conclusion towards the final meeting. Teams also
+                        receive the first puzzle of the day at the meeting. During the first meeting the rules of Pandora will be explained in details and
+                        changes relative to earlier years will be indicated. Teams will also receive their weapons, kill codes and other useful equipment.
+                        It is of utmost importance that all members of your team will be present. On the last day of Pandora a drink will be held at which
+                        the victors will be rewarded.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-2 mt-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/meetings1.png' %}" alt="" />
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/puzzles.jpg' %}" alt="" />
+        </div>
+        <div class="col-12 col-md-7 mt-2 mt-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Puzzles'|colour_first_letter }}</h2>
+                    <p>
+                        After teams receive their first puzzle during the meeting, the quest has started. Solving a puzzle results in the location at which
+                        the next puzzle is located. Every puzzle contains a puzzle code which, when submitted to the website, rewards your team with points.
+                        Solving the first 5 puzzles gives a time bonus. The first team to solve the first 5 puzzles gets the most points. Teams after that
+                        gradually receive fewer points. Puzzles linger on campus until the next meeting. After this time they can no longer be submitted on
+                        the website to earn points. Solving puzzles will unlock extra parts of the story.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-7 mb-2 mb-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Kills'|colour_first_letter }}</h2>
+                    <p>
+                        At every meeting every team member receives a personal kill code. This can be seen as your license to kill. During Pandora, you can
+                        shut down members of other teams by hitting them with your weapon. When a person 'dies', he or she hands over their kill code to the
+                        killer and can no longer engage combat with others. When the next meeting starts, you get a new kill code and can battle again.
+                        Losing your kill code does not mean all hope is lost. Without a kill code you may still participate in puzzling, and you can also
+                        walk around on campus as long as you do not carry a weapon (since this could confuse other teams). Every kill code can be submitted
+                        to the website once to receive points. As long as you are alive, you should wear your item of recognition with the white side facing
+                        outwards. When you die, you should flip it around to show the red side. This way people can tell if you have been killed but also if
+                        you are allowed to kill them.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-2 mt-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/kills1.jpg' %}" alt="" />
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/special_weapons.png' %}" alt="" />
+        </div>
+        <div class="col-12 col-md-7 mt-2 mt-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Bonus puzzles and bonus weapons'|colour_first_letter }}</h2>
+                    <p>
+                        During Pandora teams can find bonus puzzles. Solving a bonus puzzle awards your team with points, just like regular puzzles do.
+                        Usually, these puzzles are harder to solve or harder to find. Luckily you do not have to submit a bonus puzzle before the next
+                        meeting. The deadline to submit a bonus puzzle is before the final drink on Friday.
+                    </p>
+                    <p>
+                        Like every other Pandora edition, a Cake Drink will take place. During this drink everyone (including people who do not participate
+                        in Pandora) can deliver a homemade baking. These bakings will be judged by the committee and can reward your team with some deadly
+                        prices.
+                    </p>
+                    <p>
+                        In case of uncertainties take a look at the <a href="{% url 'rules' %}">rules</a> of Pandora. For further questions, please
+                        contact the <a href="{% url 'committee' year=edition.year %}">committee</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

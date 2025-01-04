@@ -1,0 +1,67 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - {{ event.name }} - Absences{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Event Absences'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if absences.exists %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Feedback</th>
+                                <th>Team</th>
+                                <th>Team member</th>
+                                <th>Reason</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for absence in absences %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ absence.created_at|date:'l j F H:i' }}</td>
+                                    <td>{{ absence.get_status_display }}</td>
+                                    <td>
+                                        {% if absence.feedback %}
+                                            {{ absence.feedback }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ absence.team_member.team.name }}</td>
+                                    <td>{{ absence.team_member.name }}</td>
+                                    <td>
+                                        {% if absence.reason %}
+                                            {{ absence.reason }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="py-1">
+                                        {% bootstrap_button button_type='link' href=absence.get_update_url content='Edit' %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="7" class="fst-italic">No event absences available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

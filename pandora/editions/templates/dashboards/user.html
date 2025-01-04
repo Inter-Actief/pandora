@@ -1,0 +1,516 @@
+{% extends 'page/two_columns.html' %}
+
+{% load django_bootstrap5 %}
+{% load edition %}
+{% load static %}
+{% load util %}
+
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}{{ 'Dashboard'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    {% if edition %}
+        <section class="col mb-4 d-flex">
+            {% include 'dashboards/cards/summary.html' %}
+        </section>
+
+        <section class="col mb-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body">
+                    <h4>{{ 'Team'|colour_first_letter }}</h4>
+
+                    {% if team %}
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td colspan="2">{{ team.name }}</td>
+                                    </tr>
+                                    {% if team.status != 'ACTIVE' %}
+                                        <tr>
+                                            <th>Status</th>
+                                            <td colspan="2">{{ team.get_status_display }} team</td>
+                                        </tr>
+                                    {% endif %}
+                                    {% if edition.current_day %}
+                                        <tr>
+                                            <th>Score</th>
+                                            <td colspan="2">
+                                                {{ team.current_score }} today / {{ team.total_score }} total
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                    {% for member in team.members.all|dictsort:'name' %}
+                                        <tr>
+                                            {% if forloop.first %}
+                                                <th rowspan="{{ team.members.count }}">Members</th>
+                                            {% endif %}
+                                            <td>{{ member.name }}</td>
+                                            <td>
+                                                {% if edition.current_day %}
+                                                    {% if member.current_kill_code.is_killed %}
+                                                        Dead
+                                                    {% else %}
+                                                        Alive
+                                                    {% endif %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% bootstrap_button button_type='link' href=team.get_participant_url content='View team' %}
+
+                        {% url 'participant_teams' year=edition.year as teams_url %}
+                        {% bootstrap_button button_type='link' href=teams_url content='View all teams' %}
+                    {% else %}
+                        <p>You are not a member of a team.</p>
+
+                        {% url 'participant_teams' year=edition.year as teams_url %}
+                        {% bootstrap_button button_type='link' href=teams_url content='View teams' %}
+
+                        {% if is_registration_allowed %}
+                            {% url 'participant_team_add' year=edition.year as create_team_url %}
+                            {% bootstrap_button button_type="link" href=create_team_url content='Create team' %}
+                        {% else %}
+                            <a class="btn btn-primary disabled" href="#" aria-disabled="true">Create team</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        {% if team and edition.pregame and edition.pregame.is_active %}
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Pregame'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Solved at</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for puzzle_code in edition.pregame.puzzle_codes.all|dictsort:'number' %}
+                                        {% call puzzle_code 'get_found_for_team' team as found %}
+                                        {% call puzzle_code 'get_solve_for_team' team as solve %}
+
+                                        <tr>
+                                            <th>{{ puzzle_code.number }}</th>
+                                            <th>
+                                                {% if found %}
+                                                    {{ puzzle_code.puzzle.name }}
+                                                {% else %}
+                                                    ?
+                                                {% endif %}
+                                            </th>
+                                            <td>
+                                                {% if solve %}
+                                                    Solved
+                                                {% else %}
+                                                    Unsolved
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if solve %}
+                                                    {{ solve.created_at|date:'j F Y H:i' }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3" class="fst-italic">No pregame puzzles available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% bootstrap_button button_type='link' href=edition.pregame.first_puzzle.puzzle_file.get_download_url content='Download first puzzle' target='pregame' %}
+
+                        {% url 'pregame_solve_add' year=edition.year as puzzle_code_url %}
+                        {% bootstrap_button button_type='link' href=puzzle_code_url content='Enter puzzle code' %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="col mb-4 d-flex"></section>
+        {% endif %}
+
+        {% if team and team.is_active and edition.current_day %}
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Puzzles'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Hint</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for puzzle_code in edition.current_day.puzzle_codes.all|dictsort:'number' %}
+                                        {% call puzzle_code 'get_found_for_team' team as found %}
+                                        {% call puzzle_code 'get_hint_for_team' team as hint %}
+                                        {% call puzzle_code 'get_solve_for_team' team as solve %}
+
+                                        <tr>
+                                            <th>{{ puzzle_code.number }}</th>
+                                            <th>
+                                                {% if found %}
+                                                    {{ puzzle_code.puzzle.name }}
+                                                {% else %}
+                                                    ?
+                                                {% endif %}
+                                            </th>
+                                            <td>
+                                                {% if solve %}
+                                                    Solved
+                                                {% else %}
+                                                    Unsolved
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if hint %}
+                                                    <a href="{{ hint.get_team_url }}">
+                                                        {{ hint.get_status_display }}
+                                                    </a>
+                                                {% else %}
+                                                    No
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if solve %}
+                                                    {{ solve.score_with_hint }}
+                                                {% else %}
+                                                    0
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3" class="fst-italic">No puzzles available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% url 'solve_add' year=edition.year as puzzle_code_url %}
+                        {% bootstrap_button button_type='link' href=puzzle_code_url content='Enter puzzle code' %}
+
+                         {% url 'hint_add' year=edition.year as hint_url %}
+                        {% bootstrap_button button_type='link' href=hint_url content='Request hint' %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if team and team.is_active and edition.current_day %}
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Kills'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Kills</th>
+                                        <th>Score</th>
+                                        <th>Killed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        {% for member in team.members.all|dictsort:'name' %}
+                                            <tr>
+                                                <th rowspan="{{ member.current_kills.count|maximum:1 }}">{{ member.name }}</th>
+                                                <td rowspan="{{ member.current_kills.count|maximum:1 }}">{{ member.current_kills.count }}</td>
+                                                <td rowspan="{{ member.current_kills.count|maximum:1 }}">{{ member.current_kill_score }}</td>
+                                                <td>
+                                                    {% for kill in member.current_kills.all|dictsort:'created_at' %}
+                                                        {% if forloop.first %}
+                                                            {{ kill.code.team_member.name }} ({{kill.code.team_member.team.name }})
+                                                        {% endif %}
+                                                    {% empty %}
+                                                        -
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                            {% for kill in member.current_kills.all|dictsort:'created_at' %}
+                                                {% if not forloop.first %}
+                                                    <tr>
+                                                        <td>{{ kill.code.team_member.name }} ({{ kill.code.team_member.team.name }})</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% url 'kill_add' year=edition.year as kill_code_url %}
+                        {% bootstrap_button button_type='link' href=kill_code_url content='Enter kill code' %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if team and team.is_active %}
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Bonus Puzzles'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Number</th>
+                                        <th>Name</th>
+                                        <th>Status</th>
+                                        <th>Hint</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for puzzle_code in edition.bonus_puzzle_codes.all|dictsort:'number' %}
+                                        {% call puzzle_code 'get_found_for_team' team as found %}
+                                        {% call puzzle_code 'get_hint_for_team' team as hint %}
+                                        {% call puzzle_code 'get_solve_for_team' team as solve %}
+
+                                        <tr>
+                                            <th>{{ puzzle_code.number }}</th>
+                                            <th>
+                                                {% if solve %}
+                                                    {{ puzzle_code.puzzle.name }}
+                                                {% else %}
+                                                    ?
+                                                {% endif %}
+                                            </th>
+                                            <td>
+                                                {% if solve %}
+                                                    Solved
+                                                {% else %}
+                                                    Unsolved
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if hint %}
+                                                    <a href="{{ hint.get_team_url }}">
+                                                        {{ hint.get_status_display }}
+                                                    </a>
+                                                {% else %}
+                                                    No
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if solve %}
+                                                    {{ solve.score_with_hint }}
+                                                {% else %}
+                                                    0
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="5" class="fst-italic">No puzzles available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Bonuses & Offences'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Reason</th>
+                                        <th>Team member</th>
+                                        <th>Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for score_modification in team.score_modifications.all|dictsort:'created_at' %}
+                                        <tr>
+                                            <td>{{ score_modification.get_type_display }}</td>
+                                            <td>{{ score_modification.reason }}</td>
+                                            <td>
+                                                {% if score_modification.team_member %}
+                                                    {{ score_modification.team_member.name }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ score_modification.amount }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="4" class="fst-italic">No bonuses or offenses available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Score'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        {% for day in edition.ordered_days %}
+                                            <th>Day {{ day.number }}</th>
+                                        {% endfor %}
+                                        <th>Bonus</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Puzzles</th>
+                                        {% for day in edition.ordered_days %}
+                                            <td>{% call team 'get_puzzle_score' day %}</td>
+                                        {% endfor %}
+                                        <td>{{ team.total_bonus_puzzle_score }}</td>
+                                        <th>{{ team.table_total_puzzle_score }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Puzzle bonus</th>
+                                        {% for day in edition.ordered_days %}
+                                            <td>{% call team 'get_puzzle_bonus_score' day %}</td>
+                                        {% endfor %}
+                                        <td>-</td>
+                                        <th>{{ team.total_puzzle_bonus_score }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Hints</th>
+                                        {% for day in edition.ordered_days %}
+                                            <td>{% call team 'get_hint_score' day %}</td>
+                                        {% endfor %}
+                                        <td>-</td>
+                                        <th>{{ team.total_hint_score }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Kills</th>
+                                        {% for day in edition.ordered_days %}
+                                            <td>{% call team 'get_kill_score' day %}</td>
+                                        {% endfor %}
+                                        <td>-</td>
+                                        <th>{{ team.total_kill_score }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Bonuses</th>
+                                        {% for day in edition.ordered_days %}
+                                            <td>-</td>
+                                        {% endfor %}
+                                        <td>{{ team.total_bonus_score }}</td>
+                                        <th>{{ team.total_bonus_score }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Offences</th>
+                                        {% for day in edition.ordered_days %}
+                                            <td>-</td>
+                                        {% endfor %}
+                                        <td>{{ team.total_offence_score }}</td>
+                                        <th>{{ team.total_offence_score }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        {% for day in edition.ordered_days %}
+                                            <th>{% call team 'get_score' day %}</th>
+                                        {% endfor %}
+                                        <th>{{ team.table_total_bonus_score }}</th>
+                                        <th>{{ team.total_score }}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if team and team.is_active %}
+            <section class="col mb-4 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4>{{ 'Event Absences'|colour_first_letter }}</h4>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>Start</th>
+                                        <th>Team member</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for absence in team.event_absences %}
+                                        <tr>
+                                            <td>{{ absence.event.name }}</td>
+                                            <td>
+                                                {% if absence.event.should_display_full %}
+                                                    {{ absence.event.start|date:'j M H:i' }} - {{ absence.event.end|date:'j M H:i' }}
+                                                {% else %}
+                                                    {{ absence.event.start|date:'D H:i' }} - {{ absence.event.end|date:'D H:i' }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ absence.team_member.user.get_full_name }}</td>
+                                            <td>{{ absence.get_status_display }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3" class="fst-italic">No event absences available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {% url 'participant_event_absence_create' year=edition.year team_id=team.id as event_absence_create_url %}
+                        {% bootstrap_button button_type='link' href=event_absence_create_url content='Request event absence' %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    {% endif %}
+{% endblock %}

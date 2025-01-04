@@ -1,0 +1,18 @@
+// Fix table color (unreleased commit https://github.com/thomaspark/bootswatch/commit/333001ba080b7e83254c2b1f3f619703d18358f8)
+$white: #fff !default;
+$table-color: $white !default;
+
+// TODO: consider if the old behaviour is more desirable
+// $table-bg: transparent !default;
+
+@import 'bootswatch/dist/darkly/variables';
+@import 'bootstrap/scss/bootstrap';
+@import 'bootswatch/dist/darkly/bootswatch';
+
+.navbar-brand {
+  font-family: $headings-font-family;
+}
+
+.first-letter {
+  color: $primary;
+}

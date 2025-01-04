@@ -1,0 +1,56 @@
+{% extends 'editions/scores.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Pregame Scores{% endblock %}
+{% block page_title %}{{ 'Pregame Scores'|colour_first_letter }}{% endblock %}
+
+{% block scores %}
+    <div class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                {% if not pregame or pregame.is_before %}
+                    <p class="fst-italic">No pregame scores available.</p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Team</th>
+                                    {% for puzzle_code in pregame.puzzle_codes.all|dictsort:'number' %}
+                                        <th>Puzzle {{ puzzle_code.number }}</th>
+                                    {% endfor %}
+                                    <th>Solved</th>
+                                    <th>Last solved at</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for team in teams %}
+                                    <tr>
+                                        <th>{{ forloop.counter }}</th>
+                                        <td>{{ team.name }}</td>
+                                        {% for puzzle_code in pregame.puzzle_codes.all|dictsort:'number' %}
+                                            {% call puzzle_code 'get_solve_for_team' team as solve %}
+
+                                            <td>
+                                                {% if solve %}
+                                                    <i class="bi bi-check-lg text-success"></i>
+                                                {% else %}
+                                                    <i class="bi bi-x-lg text-danger"></i>
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
+                                        <td>{{ team.pregame_solve_count }} / {{ pregame.puzzle_codes.count }}</td>
+                                        <td>{{ team.pregame_last_solved_at|date:'j F Y H:i' }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

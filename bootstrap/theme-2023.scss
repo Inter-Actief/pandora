@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'EnchantedLand';
+  src: url('/static/fonts/themes/2023/Enchanted_Land.otf');
+}
+
+$redpurple: #923A3A;  
+$purpleshroom: #B877D7;
+
+$primary: $redpurple;
+$secondary: $purpleshroom;
+$dark: $purpleshroom;
+
+$headings-font-family: 'EnchantedLand';
+
+$headings-font-size-base: 1.5rem;
+$h1-font-size: $headings-font-size-base * 2.5 !default;
+$h2-font-size: $headings-font-size-base * 2 !default;
+$h3-font-size: $headings-font-size-base * 1.75 !default;
+$h4-font-size: $headings-font-size-base * 1.5 !default;
+$h5-font-size: $headings-font-size-base * 1.25 !default;
+$h6-font-size: $headings-font-size-base !default;
+
+$navbar-brand-font-size: 2rem;
+
+@import 'bootswatch/dist/minty/variables';
+@import 'bootstrap/scss/bootstrap';
+@import 'bootswatch/dist/minty/bootswatch';
+
+.navbar-nav .nav-link {
+  font-size: 1.5rem;
+}
+
+.navbar-brand {
+  font-family: $headings-font-family;
+}
+
+.offcanvas-title {
+  color: $white;
+}
+
+.first-letter {
+  color: $redpurple;
+}
+
+.btn {
+   font-family: var(--#{$prefix}btn-font-family);
+}

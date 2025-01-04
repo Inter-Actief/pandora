@@ -1,0 +1,20 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Delete Score Modification{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Delete Score Modification'|colour_first_letter }}</h3>
+    <p>Are you sure you want to delete score modification "{{ score_modification.reason }}" for team "{{ score_modification.team.name }}"?</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form label_class='fw-bold' %}
+
+        {% bootstrap_button button_type='submit' button_class='btn-danger' content='Yes, delete score modification' %}
+        {% bootstrap_button button_type='link' href=puzzle.get_absolute_url content='No, cancel' %}
+    </form>
+{% endblock %}

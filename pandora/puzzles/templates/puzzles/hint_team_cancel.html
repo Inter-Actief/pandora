@@ -1,0 +1,21 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Cancel Hint Request{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Cancel Hint Request'|colour_first_letter }}</h3>
+
+    <p>Are you sure you want to cancel the hint request for puzzle {{ hint.code.number }} of day {{ hint.code.day.number }}?</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form label_class='fw-bold' %}
+
+        {% bootstrap_button button_type='submit' button_class='btn-danger' content='Yes, cancel hint request' %}
+        {% bootstrap_button button_type='link' href=hint.get_team_url content='No, leave hint request open' %}
+    </form>
+{% endblock %}

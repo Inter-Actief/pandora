@@ -1,0 +1,37 @@
+{
+    "scripts": {
+        "compile-general": "sass -I node_modules theme-general.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/general && rm bootstrap.css bootstrap.css.map",
+        "compile-1999": "sass -I node_modules theme-1999.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/1999 && rm bootstrap.css bootstrap.css.map",
+        "compile-2000": "sass -I node_modules theme-2000.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2000 && rm bootstrap.css bootstrap.css.map",
+        "compile-2001": "sass -I node_modules theme-2001.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2001 && rm bootstrap.css bootstrap.css.map",
+        "compile-2002": "sass -I node_modules theme-2002.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2002 && rm bootstrap.css bootstrap.css.map",
+        "compile-2003": "sass -I node_modules theme-2003.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2003 && rm bootstrap.css bootstrap.css.map",
+        "compile-2004": "sass -I node_modules theme-2004.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2004 && rm bootstrap.css bootstrap.css.map",
+        "compile-2005": "sass -I node_modules theme-2005.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2005 && rm bootstrap.css bootstrap.css.map",
+        "compile-2006": "sass -I node_modules theme-2006.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2006 && rm bootstrap.css bootstrap.css.map",
+        "compile-2007": "sass -I node_modules theme-2007.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2007 && rm bootstrap.css bootstrap.css.map",
+        "compile-2008": "sass -I node_modules theme-2008.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2008 && rm bootstrap.css bootstrap.css.map",
+        "compile-2009": "sass -I node_modules theme-2009.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2009 && rm bootstrap.css bootstrap.css.map",
+        "compile-2010": "sass -I node_modules theme-2010.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2010 && rm bootstrap.css bootstrap.css.map",
+        "compile-2011": "sass -I node_modules theme-2011.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2011 && rm bootstrap.css bootstrap.css.map",
+        "compile-2012": "sass -I node_modules theme-2012.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2012 && rm bootstrap.css bootstrap.css.map",
+        "compile-2013": "sass -I node_modules theme-2013.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2013 && rm bootstrap.css bootstrap.css.map",
+        "compile-2014": "sass -I node_modules theme-2014.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2014 && rm bootstrap.css bootstrap.css.map",
+        "compile-2015": "sass -I node_modules theme-2015.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2015 && rm bootstrap.css bootstrap.css.map",
+        "compile-2016": "sass -I node_modules theme-2016.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2016 && rm bootstrap.css bootstrap.css.map",
+        "compile-2017": "sass -I node_modules theme-2017.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2017 && rm bootstrap.css bootstrap.css.map",
+        "compile-2018": "sass -I node_modules theme-2018.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2018 && rm bootstrap.css bootstrap.css.map",
+        "compile-2019": "sass -I node_modules theme-2019.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2019 && rm bootstrap.css bootstrap.css.map",
+        "compile-2021": "sass -I node_modules theme-2021.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2021 && rm bootstrap.css bootstrap.css.map",
+        "compile-2022": "sass -I node_modules theme-2022.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2022 && rm bootstrap.css bootstrap.css.map",
+        "compile-2023": "sass -I node_modules theme-2023.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2023 && rm bootstrap.css bootstrap.css.map",
+        "compile-2024": "sass -I node_modules theme-2024.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2024 && rm bootstrap.css bootstrap.css.map"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.2",
+        "bootswatch": "^5.3.2"
+    },
+    "devDependencies": {
+        "sass": "^1.70.0"
+    }
+}

@@ -1,0 +1,120 @@
+{% extends 'editions/edition_media.html' %}
+
+{% load util %}
+
+{% block title %}Puzzles{% endblock %}
+{% block page_title %}{{ 'Puzzles'|colour_first_letter }}{% endblock %}
+
+{% block items %}
+    <section class="col mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                {% if edition.is_ended %}
+                    <div class="row row-cols-2">
+                        {% for day in edition.ordered_days %}
+                            <div class="col mb-4">
+                                <h4>Day {{ day.number }}</h4>
+                                <ul>
+                                    {% for code in day.puzzle_codes.all|dictsort:'number' %}
+                                        <li>
+                                            {% if code.puzzle.puzzle_file %}
+                                                <a href="{{ code.puzzle.puzzle_file.get_download_url }}" target="puzzle">
+                                                    Puzzle {{ code.number }} - {{ code.puzzle.name }}
+                                                </a>
+                                            {% else %}
+                                                Puzzle {{ code.number }} - {{ code.puzzle.name }}
+                                            {% endif %}
+
+                                            {% if code.puzzle.non_puzzle_files.exists %}
+                                                <ul>
+                                                    {% for puzzle_file in code.puzzle.non_puzzle_files.all %}
+                                                        <li>
+                                                            <a href="{{ puzzle_file.get_download_url }}" target="puzzle-file">
+                                                                {{ puzzle_file.name }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% empty %}
+                                        <li class="fst-italic">None</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+
+                        <div class="col mb-4">
+                            <h4>Bonus</h4>
+                            <ul>
+                                {% for code in edition.bonus_puzzle_codes.all|dictsort:'number' %}
+                                    <li>
+                                        {% if code.puzzle.puzzle_file %}
+                                            <a href="{{ code.puzzle.puzzle_file.get_download_url }}" target="puzzle">
+                                                Puzzle {{ code.number }} - {{ code.puzzle.name }}
+                                            </a>
+                                        {% else %}
+                                            Puzzle {{ code.number }} - {{ code.puzzle.name }}
+                                        {% endif %}
+
+                                        {% if code.puzzle.non_puzzle_files.exists %}
+                                            <ul>
+                                                {% for puzzle_file in code.puzzle.non_puzzle_files.all %}
+                                                    <li>
+                                                        <a href="{{ puzzle_file.get_download_url }}" target="puzzle-file">
+                                                            {{ puzzle_file.name }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% empty %}
+                                    <li class="fst-italic">None</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        {% if edition.pregame %}
+                            <div class="col mb-4">
+                                <h4>Pregame</h4>
+                                <ul>
+                                    {% for code in edition.pregame.puzzle_codes.all|dictsort:'number' %}
+                                        <li>
+                                            {% if code.puzzle.puzzle_file %}
+                                                <a href="{{ code.puzzle.puzzle_file.get_download_url }}" target="puzzle-file">
+                                                    Puzzle {{ code.number }} - {{ code.puzzle.name }}
+                                                </a>
+                                            {% else %}
+                                                Puzzle {{ code.number }} - {{ code.puzzle.name }}
+                                            {% endif %}
+
+                                            {% if code.puzzle.non_puzzle_files.exists %}
+                                                <ul>
+                                                    {% for puzzle_file in code.puzzle.non_puzzle_files.all %}
+                                                        <li>
+                                                            <a href="{{ puzzle_file.get_download_url }}" target="puzzle-file">
+                                                                {{ puzzle_file.name }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% empty %}
+                                        <li class="fst-italic">None</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    <p>
+                        <i class="bi bi-incognito me-1 fs-6"></i>
+                        Puzzles and solutions are hidden until Pandora has ended.
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'page/one_column.html' %}
+
+{% load django_bootstrap5 %}
+{% load edition %}
+{% load util %}
+
+{% block title %}Scores{% endblock %}
+{% block page_title %}{{ 'Scores'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    {% latest_edition as latest_edition %}
+    {% current_committee_member as committee_member %}
+
+    <div class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    {% if not edition.is_archive_scores and edition.pregame %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'pregame_scores' year=edition.year  %}" href="{% url 'pregame_scores' year=edition.year %}">
+                                Pregame
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if not edition.is_archive_scores or edition.has_day_archive_scores %}
+                        {% for day in edition.ordered_days %}
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'scores_day' year=edition.year day_number=day.number %}" href="{% url 'scores_day' year=edition.year day_number=day.number %}">
+                                    Day {{ day.number }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if not edition.is_archive_scores %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'scores_modifications' year=edition.year %}" href="{% url 'scores_modifications' year=edition.year %}">
+                                Bonuses & Offences
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'scores_total' year=edition.year %}" href="{% url 'scores_total' year=edition.year %}">
+                            Total
+                        </a>
+                    </li>
+                    {% if edition == latest_edition %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'feed' year=edition.year %}" href="{% url 'feed' year=edition.year %}">
+                                Feed
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% if edition and edition.is_scores_hidden and not committee_member %}
+        <div class="col d-flex mb-4">
+            <div class="card flex-fill">
+                <div class="card-body">
+                    <p>
+                        <i class="bi bi-incognito me-1 fs-6"></i>
+                        Scores are hidden until the final meeting.
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {% block scores %}{% endblock %}
+    {% endif %}
+{% endblock %}

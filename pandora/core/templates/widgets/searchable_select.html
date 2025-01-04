@@ -1,0 +1,92 @@
+{% include 'django/forms/widgets/input.html' %}
+
+<input id="{{ input_id }}" class="form-control" name="{{ widget.name }}_search" type="search" placeholder="Search..." {% include 'widgets/searchable_select_attrs.html' %}>
+
+<ul id="{{ input_id }}_results" class="list-group mt-2">
+</ul>
+
+{{ data|json_script:data_id }}
+<script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        const data = JSON.parse(document.getElementById('{{ data_id }}').textContent);
+
+        const elementInput = document.getElementById('{{ input_id }}');
+        const elementHidden = document.getElementById('{{ input_id }}_hidden');
+        const elementResults = document.getElementById('{{ input_id }}_results');
+
+        const updateValue = (element) => {
+              for (const element of elementResults.children) {
+                element.classList.remove('active');
+            }
+
+            elementHidden.value = element.dataset.value;
+            element.classList.add('active');
+        };
+
+        const handleClick = (event) => {
+            updateValue(event.target);
+        };
+
+        const createResultItemElement = (item) => {
+            const elementResult = document.createElement('li');
+
+            elementResult.classList.add('list-group-item');
+            if (item.value === elementHidden.value) {
+                elementResult.classList.add('active');
+            }
+
+            elementResult.style.cursor = 'pointer';
+            elementResult.textContent = item.label;
+            elementResult.dataset.value = item.value;
+
+            elementResult.addEventListener('click', handleClick);
+
+            return elementResult;
+        };
+
+        let results = [];
+        let index = -1;
+
+        const update = (query) => {
+            results = data
+                .filter((item) => item.query.includes(query) || item.label.toLowerCase().includes(query))
+                .sort((a, b) => a.label > b.label ? -1 : 1)
+                .slice(0, 5);
+            index = -1;
+
+            elementResults.replaceChildren(...results.map(createResultItemElement));
+        };
+
+        elementInput.addEventListener('input', (event) => {
+            update(event.target.value.toLowerCase());
+        });
+
+        elementInput.addEventListener('keydown', (event) => {
+            if (event.altKey || event.ctrlKey || event.shiftKey || event.metaKey) {
+                return;
+            } else if (!['ArrowDown', 'ArrowUp'].includes(event.key)) {
+                return;
+            }
+
+            event.preventDefault();
+
+            if (results.length === 0) {
+                return;
+            }
+
+            const delta = event.key === 'ArrowDown' ? 1 : -1;
+            index = Math.min(Math.max(0, index + delta), results.length - 1);
+
+            updateValue(elementResults.querySelector(`li[data-value="${results[index].value}"]`));
+        });
+
+        if (elementHidden.value.length > 0) {
+            const item = data.find((item) => item.value === elementHidden.value);
+            if (item) {
+                elementResults.replaceChildren(createResultItemElement(item));
+            }
+        } else {
+            update(elementInput.value);
+        }
+    });
+</script>

@@ -1,0 +1,101 @@
+{% extends 'page/rows.html' %}
+
+{% load edition %}
+{% load static %}
+{% load util %}
+
+{% block title %}Committee{% endblock %}
+{% block page_title %}{{ 'Committee'|colour_first_letter }}{% endblock %}
+
+{% block rows %}
+    {% latest_edition as latest_edition %}
+
+    <section class="row mb-4">
+        {% if edition == latest_edition %}
+            <div class="col-12 col-md-6 d-flex mb-4 mb-md-0">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <h4 class="mb-3">{{ 'Contact Information'|colour_first_letter }}</h4>
+
+                        <p class="text mb-3">For questions about Pandora you can contact the committee.</p>
+
+                        <div class="row row-cols-1 row-cols-md-2 g-3">
+                            <div class="col order-1 order-md-1 d-grid">
+                                <a class="btn btn-primary" href="mailto:iapandora2024@gmail.com" target="contact" role="button">
+                                    <i class="bi bi-envelope-at me-1" aria-hidden="true"></i>
+                                    iapandora2024@gmail.com
+                                </a>
+                            </div>
+                            <div class="col order-2 order-md-3 d-grid">
+                                <a class="btn btn-primary" href="https://www.instagram.com/IAPandora" target="contact" role="button">
+                                    <i class="bi bi-instagram me-1" aria-hidden="true"></i>
+                                    Instagram
+                                </a>
+                            </div>
+                            {% if edition and not edition.is_theme_hidden %}
+                                <div class="col order-3 order-md-5 d-grid">
+                                    <a class="btn btn-primary" href="https://discord.gg/PSDyJQFHZh" target="contact" role="button">
+                                        <i class="bi bi-discord me-1" aria-hidden="true"></i>
+                                        Discord
+                                    </a>
+                                </div>
+                                <div class="col order-4 order-md-2 d-grid">
+                                    <a class="btn btn-primary" href="tel:+31612494251" target="contact" role="button">
+                                        <i class="bi bi-telephone me-1" aria-hidden="true"></i>
+                                        +31 6 12494251
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="col order-5 order-md-4 d-grid">
+                                <a class="btn btn-primary" href="https://link.mazemap.com/ipPHoxWl" target="contact" role="button">
+                                    <i class="bi bi-geo-alt me-1" aria-hidden="true"></i>
+                                    Citadel T400
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-12 col-md-6 d-flex mb-4 mb-md-0">
+            <div class="card flex-fill">
+                <div class="card-body">
+                    <h4>{{ 'Committee Members'|colour_first_letter }}</h4>
+
+                    {% if not edition or edition.is_theme_hidden %}
+                        <p>The committee is still a secret 🤫.</p>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Function</th>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for committee_member in committee_members.all|dictsort:'sort_index' %}
+                                        <tr>
+                                            <td>{{ committee_member.function }}</td>
+                                            <td>{{ committee_member.name }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="2" class="fst-italic">No committee members available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if edition and not edition.is_theme_hidden %}
+        <section class="my-4">
+            <img class="mx-auto img-fluid rounded" src="{% static edition.theme_committee_image_file %}" alt="Picture of the committee" />
+        </section>
+    {% endif %}
+{% endblock %}

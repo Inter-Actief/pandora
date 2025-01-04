@@ -1,0 +1,20 @@
+{% extends 'page/simple_narrow.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/logout.html #}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Sign Out{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Sign Out'|colour_first_letter }}</h3>
+
+    <p>Are you sure you want to sign out?</p>
+
+    <form method="POST" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+
+        {% bootstrap_button button_type="submit" content="Sign out" %}
+    </form>
+{% endblock %}

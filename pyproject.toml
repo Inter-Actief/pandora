@@ -1,0 +1,57 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "pandora"
+version = "1.0.0"
+description = "Website for Inter-Actief Pandora."
+authors = ["Pandora Committee <pandora@inter-actief.net>"]
+maintainers = ["Pandora Committee <pandora@inter-actief.net>"]
+license = "MIT"
+readme = "README.md"
+
+homepage = "https://github.com/Inter-Actief/pandora"
+repository = "https://github.com/Inter-Actief/pandora"
+
+keywords = ["pandora"]
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "License :: OSI Approved :: MIT License",
+    "Private :: Do Not Upload",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3"
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+asgiref = "^3.8.1"
+channels = "^4.1.0"
+channels-redis = "^4.2.0"
+croniter = "^2.0.5"
+django = "^5.0.5"
+django-allauth = {extras = ["openid", "socialaccount"], version = "^0.62.1"}
+django-allow-cidr = "^0.7.1"
+django-bootstrap5 = "^24.2"
+django-cors-headers = "^4.3.1"
+django-filter = "^24.2"
+django-import-export = "^4.0.1"
+django-qr-code = "^4.0.1"
+django-request-cache = "^1.4.0"
+gunicorn = "^22.0.0"
+mysqlclient = "^2.1.1"
+pillow = "^10.2.0"
+python-dotenv = "^1.0.1"
+pytz = "^2024.1"
+sentry-sdk = "^2.1.1"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+beautifulsoup4 = "^4.12.3"
+
+[tool.poetry.group.dev.dependencies]
+daphne = "^4.0.0"
+django-debug-toolbar = "^4.0.0"
+django-extensions = "^3.2.1"
+pygraphviz = { version = "^1.12", platform = "linux" }

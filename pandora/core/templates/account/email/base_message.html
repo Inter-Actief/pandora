@@ -1,0 +1,13 @@
+{% extends 'emails/base.html' %}
+
+{% block layout %}
+    <p>Dear,</p>
+
+    {% block content %}{% endblock %}
+
+    <p>
+        With kind regards,<br/>
+        <br/>
+        Pandora committee
+    </p>
+{% endblock %}

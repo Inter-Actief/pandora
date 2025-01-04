@@ -1,0 +1,18 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Edit Event Absence{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Edit Event Absence'|colour_first_letter }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form label_class='fw-bold' %}
+
+        {% bootstrap_button button_type='submit' content='Save changes' %}
+    </form>
+{% endblock %}

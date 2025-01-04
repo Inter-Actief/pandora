@@ -1,0 +1,22 @@
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/socialaccount/snippets/provider_list.html #}
+
+{% load oauth %}
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+<div class="d-grid gap-2">
+    {% for provider in socialaccount_providers %}
+        {% if provider.id == 'openid' %}
+            {% for brand in provider.get_brands %}
+                <a class="btn btn-primary" href="{% provider_login_url provider.id openid=brand.openid_url process=process %}" role="button">
+                    Sign in with {{ brand.name }}
+                </a>
+            {% endfor %}
+        {% endif %}
+
+         <a class="btn btn-primary" href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}" role="button">
+             Sign in with {% get_provider_app_name provider %}
+         </a>
+    {% endfor %}
+</div>

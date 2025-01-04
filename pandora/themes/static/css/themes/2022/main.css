@@ -1,0 +1,108 @@
+body {
+    background-image: url('static/images/themes/2022/background-background.png');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* Logo */
+
+.logo {
+  height: 350px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
+.large-logo {
+  max-width: 100vw;
+  height: 80vh;
+  margin-bottom: 10vh;
+}
+
+.large-logo  * {
+  max-width: 100% !important;
+}
+
+.fancy-logo {
+  position: relative;
+  width: 100%;
+  height: 80%;
+}
+
+.fancy-logo img {
+  position: absolute;
+  height: 100%;
+}
+
+.fancy-logo .puzzle {
+  animation-name: puzzle-bounce;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+.fancy-logo .beam {
+  animation-name: beam-fade;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.large-logo .title {
+  max-width: 600px;
+}
+
+@keyframes puzzle-bounce {
+  from {top: -2vh}
+  to {top: 12vh}
+}
+
+@keyframes beam-fade {
+  from {opacity: 30%}
+  to {opacity: 100%}
+}
+
+/* Background */
+
+#background  {
+    position: fixed;
+    z-index: -1;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+}
+
+#background-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#background-wrapper div {
+    height: 100%;
+    width: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+}
+
+#background-wrapper #stars {
+    background-image: url('/static/images/themes/2022/background-stars.png');
+    animation-name: stars-fade;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+#background-wrapper #trees {
+    background-image: url('/static/images/themes/2022/background-trees.png');
+}
+
+@keyframes stars-fade {
+    from {opacity: 100%}
+    to {opacity: 30%}
+}

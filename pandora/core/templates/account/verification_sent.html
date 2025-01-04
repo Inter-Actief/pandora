@@ -1,0 +1,16 @@
+{% extends 'page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/verification_sent.html #}
+
+{% load util %}
+
+{% block title %}Verify Your E-mail Address{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Verify Your E-mail Address'|colour_first_letter }}</h3>
+
+    <p>
+        We have sent you an e-mail for verification. Follow the link provided to finalize the signup process. If you do not see the verification e-mail in
+        your main inbox, check your spam folder. Please contact us if you do not receive the verification e-mail within a few minutes.
+    </p>
+{% endblock %}

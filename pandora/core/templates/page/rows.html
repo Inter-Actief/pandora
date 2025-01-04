@@ -1,0 +1,25 @@
+{% extends 'base/index.html' %}
+
+{% load edition %}
+
+{% current_edition as edition %}
+
+{% block content %}
+    <div class="container">
+        {% if edition and not edition.is_theme_hidden %}
+            {% include edition.theme_page_title_start_template %}
+        {% endif %}
+
+        <h1 class="page-title">
+            {% block page_title %}
+            {% endblock %}
+        </h1>
+
+        {% if edition and not edition.is_theme_hidden %}
+            {% include edition.theme_page_title_end_template %}
+        {% endif %}
+
+        {% block rows %}
+        {% endblock %}
+    </div>
+{% endblock %}

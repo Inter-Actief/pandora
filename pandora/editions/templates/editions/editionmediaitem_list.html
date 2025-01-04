@@ -1,0 +1,47 @@
+{% extends 'editions/edition_media.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Media{% endblock %}
+{% block page_title %}{{ 'Media'|colour_first_letter }}{% endblock %}
+
+{% block items %}
+    {% if items.exists %}
+        <div class="row row-cols-2">
+            {% for item in items %}
+                <section class="col mb-4">
+                    <div class="card flex-fill">
+                        <div class="card-body">
+                            <h4 class="mb-3">{{ item.name|colour_first_letter }}</h4>
+
+                            {% if item.description %}
+                                <p>{{ item.description }}</p>
+                            {% endif %}
+
+                            {% if item.url %}
+                                {% if item.youtube_url %}
+                                    <div class="ratio ratio-16x9">
+                                        <iframe title="{{ item.name }}" src="{{ item.youtube_url }}" allowfullscreen></iframe>
+                                    </div>
+                                {% else %}
+                                    {% bootstrap_button button_type='link' href=item.url target='media' content='Open link' %}
+                                {% endif %}
+                            {% elif item.file %}
+                                {% bootstrap_button button_type='link' href=item.file_url target='media' content='Download file' %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </section>
+            {% endfor %}
+        </div>
+    {% else %}
+        <section class="col mb-4">
+            <div class="card flex-fill">
+                <div class="card-body fst-italic">
+                    No media available.
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

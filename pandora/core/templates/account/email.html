@@ -1,0 +1,59 @@
+{% extends 'page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/email.html #}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}E-mail Addresses{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'E-mail Addresses'|colour_first_letter }}</h3>
+
+    {% if user.emailaddress_set.all %}
+        <p>The following e-mail addresses are associated with your account:</p>
+
+        <form method="POST" action="{% url 'account_email' %}">
+            {% csrf_token %}
+
+            <fieldset class="mb-3">
+                {% for emailaddress in user.emailaddress_set.all %}
+                    <label class="d-block" for="email_radio_{{ forloop.counter }}">
+                        <input
+                            id="email_radio_{{ forloop.counter }}"
+                            name="email"
+                            type="radio"
+                            value="{{ emailaddress.email }}"
+                            {% if emailaddress.primary or user.emailaddreess_set.count == 1 %}checked="checked"{% endif %}
+                        />
+                        {{ emailaddress.email }}
+                        ({% if emailaddress.verified %}Verified{% else %}Unverified{% endif %}{% if emailaddress.primary %}{{ ', Primary' }}{% endif %})
+                   </label>
+                {% endfor %}
+            </fieldset>
+
+            {% bootstrap_button button_type="submit" name="action_primary" content="Make primary"  %}
+            {% bootstrap_button button_type="submit" name="action_send" content="Re-send verification" %}
+            {% bootstrap_button button_type="submit" name="action_remove" content="Remove" %}
+        </form>
+    {% else %}
+        <p>
+            <strong>Warning:</strong> You currently do not have any e-mail address set up.
+            You should add an e-mail address, so you can receive notifications, reset your password, etc.
+        </p>
+    {% endif %}
+
+    {% if can_add_email %}
+        <div class="mt-4">
+            <h4>{{ 'Add E-mail Address'|colour_first_letter }}</h4>
+
+            <form method="POST" action="{% url 'account_email' %}">
+                {% csrf_token %}
+
+                {% bootstrap_form form label_class='fw-bold' %}
+
+                {% bootstrap_button button_type="submit" name="action_add" content="Add e-mail"  %}
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}

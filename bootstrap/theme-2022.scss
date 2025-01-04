@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'Conthrax Sb';
+  src: url('/static/fonts/themes/2022/conthrax-sb.ttf');
+}
+
+$teal: #60f7ca;
+
+$primary: $teal;
+
+$headings-font-family: 'Conthrax Sb';
+
+@import 'bootswatch/dist/cyborg/variables';
+@import 'bootstrap/scss/bootstrap';
+@import 'bootswatch/dist/cyborg/bootswatch';
+
+.navbar-brand {
+  font-family: $headings-font-family;
+}
+
+.first-letter {
+  color: $primary;
+}
+
+.offcanvas.bg-dark {
+  background-color: $body-bg !important;
+}
+
+.nav-tabs, .nav-pills {
+  .nav-link.active {
+    color: $black;
+  }
+}

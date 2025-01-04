@@ -1,0 +1,89 @@
+{% extends 'page/one_column.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ event.name }}{% endblock %}
+{% block page_title %}{{ event.name|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h4>{{ 'Team Members'|colour_first_letter }}</h4>
+
+                <div class="my-3">
+                    {% bootstrap_button button_type='link' href=event.get_scanner_url content='Open scanner' %}
+
+                    {% bootstrap_button button_type='link' href=event.get_member_search_url content='Search by name' %}
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-3">
+                    <div class="col">
+                        <h5>Present</h5>
+
+                        <ul id="event-members-present" class="list-group">
+                            {% for member in event.present_team_members %}
+                                <li class="list-group-item" data-member-id="{{ member.id }}">
+                                    <span class="d-block fw-bold">{{ member.user.get_full_name }}</span>
+                                    <span class="d-block">{{ member.team.name }} - {{ member.name }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h5>Absent</h5>
+
+                        <ul id="event-members-absent" class="list-group">
+                            {% for member in event.absent_team_members %}
+                                <li class="list-group-item" data-member-id="{{ member.id }}">
+                                    <span class="d-block fw-bold">{{ member.user.get_full_name }}</span>
+                                    <span class="d-block">{{ member.team.name }} - {{ member.name }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h5>Missing</h5>
+
+                        <ul id="event-members-missing" class="list-group">
+                            {% for member in event.missing_team_members %}
+                                <li class="list-group-item" data-member-id="{{ member.id }}">
+                                    <span class="d-block fw-bold">{{ member.user.get_full_name }}</span>
+                                    <span class="d-block">{{ member.team.name }} - {{ member.name }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize WebSocket
+            const webSocket = new ReconnectingWebSocket('{{ websocket_url }}');
+
+            const onMessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    if (data.type === 'event.member' && data.status === 'present') {
+                        const elementItem = document.querySelector(`[data-member-id="${data.member.id}"]`);
+
+                        const elementList = document.getElementById('event-members-present');
+                        elementList.prepend(elementItem);
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            // Add WebSocket event listeners
+            webSocket.addEventListener('message', onMessage)
+        });
+    </script>
+{% endblock %}

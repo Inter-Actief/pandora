@@ -1,0 +1,16 @@
+{% extends 'page/one_column.html' %}
+
+{% load django_bootstrap5 %}
+{% load edition %}
+{% load util %}
+
+{% block title %}Committee Feed Dashboard{% endblock %}
+{% block page_title %}{{ 'Committee Feed Dashboard'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    {% if edition %}
+        <section class="col mb-4 d-flex">
+            {% include 'dashboards/cards/feed.html' %}
+         </section>
+    {% endif %}
+{% endblock %}

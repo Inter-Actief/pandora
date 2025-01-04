@@ -1,0 +1,119 @@
+{% load edition %}
+{% load util %}
+
+<div class="card flex-fill">
+    <div class="card-body">
+        <h4>
+            {% if edition.current_day %}
+                {{ 'Pandora'|colour_first_letter }} {% current_edition_year %} - Day {{ edition.current_day.number }}
+            {% else %}
+                {{ 'Pandora'|colour_first_letter }} {% current_edition_year %}
+            {% endif %}
+        </h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tbody>
+                    {% if edition.next_day %}
+                        <tr>
+                            <th>Time until next day</th>
+                            <td id="dashboard-next-day-time">{{ edition.next_day.start|timeuntil }}</td>
+                        </tr>
+                    {% endif %}
+                    {% for event in edition.current_events.all %}
+                        <tr>
+                            {% if forloop.first %}
+                                <th rowspan="{{ edition.current_events.count }}">Current event{% if edition.current_events.count != 1 %}s{% endif %}</th>
+                            {% endif %}
+                            <td>
+                                {{ event.name }}
+                                {% if event.should_display_full %}
+                                    ({{ event.start|date:'j M H:i' }} - {{ event.end|date:'j M H:i' }})
+                                {% else %}
+                                    ({{ event.start|date:'D H:i' }} - {{ event.end|date:'D H:i' }})
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for event in edition.next_events.all %}
+                        <tr>
+                            {% if forloop.first %}
+                                <th rowspan="{{ edition.next_events.count }}">Next event{% if edition.next_events.count != 1 %}s{% endif %}</th>
+                            {% endif %}
+                            <td>
+                                {{ event.name }}
+                                {% if event.should_display_full %}
+                                    ({{ event.start|date:'j M H:i' }} - {{ event.end|date:'j M H:i' }})
+                                {% else %}
+                                    ({{ event.start|date:'D H:i' }} - {{ event.end|date:'D H:i' }})
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% if edition.next_events.count > 0 %}
+                        <tr>
+                            <th>Time until next event</th>
+                            <td id="dashboard-next-event-time">{{ edition.next_events.first.start|timeuntil }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Teams</th>
+                        <td>
+                            {{ edition.active_teams.count }}
+                            {% if edition.current_day %}
+                                ({{ edition.current_day.alive_teams|length }} alive, {{ edition.current_day.dead_teams|length }} dead)
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        {% if edition.current_day %}
+            {# TODO: leaderboard with link to full scores? #}
+        {% endif %}
+    </div>
+</div>
+
+{% block scripts %}
+    {% if edition %}
+        <script type="application/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                const countdowns = [];
+
+                {% if edition.next_day %}
+                    countdowns.push([
+                        document.getElementById('dashboard-next-day-time'),
+                        luxon.DateTime.fromISO('{{ edition.next_day.start|date:'c' }}')
+                    ]);
+                {% endif %}
+
+                {% if edition.next_events.count > 0 %}
+                    countdowns.push([
+                        document.getElementById('dashboard-next-event-time'),
+                        luxon.DateTime.fromISO('{{ edition.next_events.first.start|date:'c' }}')
+                    ]);
+                {% endif %}
+
+                setInterval(() => {
+                    const now = luxon.DateTime.now();
+
+                    for (const [element, nextTime] of countdowns) {
+                        if (now >= nextTime) {
+                            window.location.reload();
+                            return;
+                        }
+
+                        const diff = nextTime.diff(now);
+
+                        let text = diff.rescale().toHuman();
+                        if (text.includes('millisecond')) {
+                            text = text.substring(0, text.lastIndexOf(','))
+                        }
+                        element.textContent = text;
+                    }
+                }, 1000);
+            });
+        </script>
+    {% endif %}
+{% endblock %}

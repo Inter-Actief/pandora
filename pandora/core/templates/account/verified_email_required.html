@@ -1,0 +1,24 @@
+{% extends 'page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/verified_email_required.html #}
+
+{% load util %}
+
+{% block title %}Verify Your E-mail Address{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Verify Your E-mail Address'|colour_first_letter }}</h3>
+
+    <p>
+        This part of the site requires us to verify that you are who you claim to be.
+        For this purpose, we require that you verify ownership of your e-mail address.
+    </p>
+
+    <p>
+        We have sent an e-mail to you for verification. Please click on the link inside that e-mail.
+        If you do not see the verification e-mail in your main inbox, check your spam folder.
+        Otherwise, contact us if you do not receive it within a few minutes.
+    </p>
+
+    <p><strong>Note:</strong> you can still <a href="{%  url 'account_email' %}">change your e-mail address</a>.</p>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'emails/base.txt' %}
+{% block layout %}
+Dear,
+
+{% block content %}{% endblock %}
+
+With kind regards,
+Pandora committee
+{% endblock %}

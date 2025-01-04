@@ -1,0 +1,13 @@
+{% extends 'page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/account_inactive.html #}
+
+{% load util %}
+
+{% block title %}Account Inactive{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Account Inactive'|colour_first_letter }}</h3>
+
+    <p>This account is inactive.</p>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'page/two_columns.html' %}
+
+{% load django_bootstrap5 %}
+{% load edition %}
+{% load util %}
+
+{% block title %}Committee Dashboard{% endblock %}
+{% block page_title %}{{ 'Committee Dashboard'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    {% if edition %}
+        <section class="col mb-4 d-flex">
+            {% include 'dashboards/cards/summary.html' %}
+        </section>
+
+         <section class="col mb-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body">
+                    <h4>{{ 'Quick Links'|colour_first_letter }}</h4>
+
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <div class="col d-grid gap-2 mb-2">
+                            <a class="btn btn-primary" href="{% url 'teams' year=edition.year %}" role="button">
+                                <i class="bi bi-people me-1" aria-hidden="true"></i>
+                                Teams
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'kill_codes' year=edition.year day_number=edition.url_day_number %}" role="button">
+                                <i class="bi bi-upc-scan me-1" aria-hidden="true"></i>
+                                Kill codes
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'kills' year=edition.year day_number=edition.url_day_number %}" role="button">
+                                <i class="bi bi-bullseye me-1" aria-hidden="true"></i>
+                                Kills
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'events' year=edition.year  %}" role="button">
+                                <i class="bi bi-calendar-event me-1" aria-hidden="true"></i>
+                                Events
+                            </a>
+                        </div>
+                        <div class="col d-grid gap-2 mb-2">
+                            <a class="btn btn-primary" href="{% url 'edition_settings' year=edition.year  %}" role="button">
+                                <i class="bi bi-gear me-1" aria-hidden="true"></i>
+                                Settings
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'puzzles' year=edition.year %}" role="button">
+                                <i class="bi bi-puzzle me-1" aria-hidden="true"></i>
+                                Puzzles
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'solves' year=edition.year day_number=edition.url_day_number %}" role="button">
+                                <i class="bi bi-clipboard2-check me-1" aria-hidden="true"></i>
+                                Solves
+                            </a>
+                            <a class="btn btn-primary" href="{% url 'hints' year=edition.year %}" role="button">
+                                <i class="bi bi-question-circle me-1" aria-hidden="true"></i>
+                                Hints
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </section>
+
+         <section class="col mb-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body">
+                    <h4>{{ 'Scores'|colour_first_letter }}</h4>
+
+                </div>
+            </div>
+         </section>
+
+        <section class="col mb-4 d-flex">
+            {% include 'dashboards/cards/feed.html' %}
+         </section>
+    {% endif %}
+{% endblock %}

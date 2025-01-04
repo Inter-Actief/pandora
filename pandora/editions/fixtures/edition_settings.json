@@ -1,0 +1,123 @@
+[
+    {
+        "model": "editions.editionsetting",
+        "pk": "347eb4e4-59c3-472c-8d4c-0be9afe682bb",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "teams.limit",
+            "value": "25",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "5884cf8e-6086-41aa-a4a2-a883f1f10403",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "puzzles.hint.score",
+            "value": "10",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "60184a2b-390e-435d-8381-aa0f8ada34bb",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "puzzles.bonus.score",
+            "value": "80,75,70,66,62,58,55,52,49,47,45,43,42,41,40",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "81d902fd-66f9-448d-8c35-68e8660ecd44",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "puzzles.bonus.after",
+            "value": "5",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "a77f664d-d507-4654-ae2f-2114b59f685e",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "kills.score",
+            "value": "4",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "af729e41-4a5b-4482-8734-fc7ec7783fb0",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "teams.members.limit",
+            "value": "6",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "b2cf60eb-df9a-4bed-b4cc-4973cce98e1c",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "puzzles.score",
+            "value": "10,10,10,10,10,12,14,16",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "332d2f83-54de-46e4-af03-23b158a78242",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "teams.registration.allowed",
+            "value": "false",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "ee9a2471-1b68-44e9-8bc7-3705b319e6dc",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "teams.edit.allowed",
+            "value": "false",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "29dc498f-7003-47e0-821f-0ab15f2f9847",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "theme.hidden",
+            "value": "true",
+            "edition": null
+        }
+    },
+    {
+        "model": "editions.editionsetting",
+        "pk": "a440ea78-8669-469d-885e-9b3a70740868",
+        "fields": {
+            "created_at": "2023-01-01T00:00:00+01:00",
+            "updated_at": "2023-01-01T00:00:00+01:00",
+            "key": "scores.hidden",
+            "value": "false",
+            "edition": null
+        }
+    }
+]

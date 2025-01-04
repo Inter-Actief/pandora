@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+    <body>
+        <h4>Full message</h4>
+        <textarea id="message" rows="10" style="min-width: 50%;">{{ full_message }}</textarea>
+
+        {% if text_message %}
+            <h4>Text message</h4>
+            <div>{{ text_message|linebreaksbr }}</div>
+        {% endif %}
+
+        {% if html_message %}
+            <h4>HTML message</h4>
+            <iframe srcdoc="{{ html_message|force_escape }}" style="position: absolute; min-width: 50%; min-height: 25%;"></iframe>
+        {% endif %}
+    </body>
+</html>

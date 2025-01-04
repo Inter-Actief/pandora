@@ -1,0 +1,180 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Puzzles{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Puzzle Codes'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if edition.puzzle_code_numbers %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Pregame</th>
+                                {% for day in edition.ordered_days %}
+                                    <th>Day {{ day.number }}</th>
+                                {% endfor %}
+                                <th>Bonus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for number in edition.puzzle_code_numbers %}
+                                {% call edition 'get_pregame_puzzle_code' number as pregame_puzzle_code %}
+                                {% call edition 'get_bonus_puzzle_code' number as bonus_puzzle_code %}
+
+                                <tr>
+                                    <th>{{ number }}</th>
+                                    <td>
+                                        {% if pregame_puzzle_code %}
+                                            <a href="{{ pregame_puzzle_code.puzzle.get_absolute_url }}">{{ pregame_puzzle_code.puzzle.name }}</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    {% for day in edition.ordered_days %}
+                                        {% call day 'get_puzzle_code' number as puzzle_code %}
+
+                                        <td>
+                                            {% if puzzle_code %}
+                                                <a href="{{ puzzle_code.puzzle.get_absolute_url }}">{{ puzzle_code.puzzle.name }}</a>
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        {% if bonus_puzzle_code %}
+                                            <a href="{{ bonus_puzzle_code.puzzle.get_absolute_url }}">{{ bonus_puzzle_code.puzzle.name }}</a>
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="{{ edition.puzzle_code_day_count }}" class="fst-italic">No puzzle codes available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Puzzles'|colour_first_letter }}</h3>
+
+                <div class="mb-3">
+                    {% url 'puzzle_create' year=edition.year as puzzle_create_url %}
+                    {% bootstrap_button button_type='link' href=puzzle_create_url content='Create puzzle' %}
+
+                    {% bootstrap_button button_type='button' content='Show solutions' id='puzzle-solution-button' %}
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th class="puzzle-solution d-none">Solution</th>
+                                <th class="puzzle-solution d-none">Direction</th>
+                                <th class="puzzle-solution d-none">Distance</th>
+                                <th>Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for puzzle in puzzles %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ puzzle.name }}</td>
+                                    <td class="puzzle-solution d-none">{{ puzzle.solution }}</td>
+                                    <td class="puzzle-solution d-none">{{ puzzle.get_solution_direction_display }}</td>
+                                    <td class="puzzle-solution d-none">
+                                        {% if puzzle.solution_distance %}
+                                            {{ puzzle.solution_distance }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if puzzle.code %}
+                                            {% if puzzle.code.day %}
+                                                Day {{ puzzle.code.day.number }} - Puzzle {{ puzzle.code.number }}
+                                            {% else %}
+                                                Bonus - Puzzle {{ puzzle.code.number }}
+                                            {% endif %}
+                                        {% elif puzzle.pregame_code %}
+                                            Pregame - Puzzle {{ puzzle.pregame_code.number }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="py-1">
+                                        {% bootstrap_button button_type='link' href=puzzle.get_absolute_url content='View' extra_classes='me-3' %}
+
+                                        {% if puzzle.code %}
+                                            {% bootstrap_button button_type='link' href=puzzle.code.get_update_url content='Edit code' %}
+                                            {% bootstrap_button button_type='link' button_class='btn-danger' href=puzzle.code.get_delete_url content='Delete code' %}
+                                        {% elif puzzle.pregame_code %}
+                                            {% bootstrap_button button_type='link' href=puzzle.pregame_code.get_update_url content='Edit code' %}
+                                            {% bootstrap_button button_type='link' button_class='btn-danger' href=puzzle.pregame_code.get_delete_url content='Delete code' %}
+                                        {% else %}
+                                            {% bootstrap_button button_type='link' href=puzzle.get_code_create_url content='Create code' %}
+                                            {% bootstrap_button button_type='link' href=puzzle.get_pregame_code_create_url content='Create pregame code' %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="5" class="fst-italic">No events available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('puzzle-solution-button');
+
+            let isHidden = true;
+
+            const update = () => {
+                const elements = document.getElementsByClassName('puzzle-solution');
+                for (const element of elements) {
+                    if (isHidden) {
+                        element.classList.add('d-none');
+                    } else {
+                        element.classList.remove('d-none');
+                    }
+                }
+
+                button.textContent = isHidden ? 'Show solutions' : 'Hide solutions';
+            };
+
+            button.addEventListener('click', () => {
+                isHidden = !isHidden;
+
+                update();
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Solves{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Solves'|colour_first_letter }}</h3>
+
+                <ul class="nav nav-pills my-3">
+                    {% for day in edition.ordered_days %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'solves' year=edition.year day_number=day.number %}" href="{% url 'solves' year=edition.year day_number=day.number %}">
+                                Day {{ day.number }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'solves_bonus' year=edition.year %}" href="{% url 'solves_bonus' year=edition.year %}">
+                            Bonus
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if solves.exists %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Time</th>
+                                <th>Team</th>
+                                <th>Puzzle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for solve in solves %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ solve.created_at|date:'l j F H:i' }}</td>
+                                    <td>{{ solve.team.name }}</td>
+                                    <td>Puzzle {{ solve.code.number }} - {{ solve.code.puzzle.name }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="fst-italic">No solves available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

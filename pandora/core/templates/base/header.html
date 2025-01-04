@@ -1,0 +1,126 @@
+{% load edition %}
+{% load team %}
+{% load util %}
+
+{% current_edition as edition %}
+{% current_committee_member as committee_member %}
+{% current_team as team %}
+{% latest_edition as latest_edition %}
+
+<nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <div>
+            <button class="navbar-toggler me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbar-offcanvas"
+                    aria-controls="navbar-offcanvas" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            {% if edition %}
+                <a class="navbar-brand" href="{% url 'participant_edition' year=edition.year %}">Pandora {% current_edition_year %}</a>
+            {% else %}
+                <a class="navbar-brand" href="{% url 'home' %}">Pandora</a>
+            {% endif %}
+        </div>
+        <div class="d-lg-none">
+            {% if edition %}
+                <a class="navbar-brand" href="{% url 'dashboard' year=edition.year %}" aria-label="Dashboard">
+                    <i class="bi bi-speedometer2"></i>
+                </a>
+            {% endif %}
+        </div>
+
+        <div id="navbar-offcanvas" class="offcanvas offcanvas-start bg-dark" tabindex="-1" aria-labelledby="navbar-offcanvas-label">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title">Pandora {% current_edition_year %}</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav flex-grow-1 me-auto">
+                    {% edition_years as years %}
+                    {% if years|length > 0 %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% current_edition_year %}
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for year in years %}
+                                    <li>
+                                        <a class="dropdown-item {% active 'participant_edition' year=year %}" href="{% url 'participant_edition' year=year %}">{{ year }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if edition %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'participant_edition' year=edition.year %}" href="{% url 'participant_edition' year=edition.year%}">About</a>
+                        </li>
+                        {% if edition == latest_edition %}
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'gameplay' %}" href="{% url 'gameplay' %}">Gameplay</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'rules' %}" href="{% url 'rules' %}">Rules</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'participant_teams' year=edition.year %}" href="{% url 'participant_teams' year=edition.year %}">Teams</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'scores_day' year=edition.year %} {% active 'scores_modifications' year=edition.year %} {% active 'scores_total' year=edition.year %} {% active 'pregame_scores' year=edition.year %}" href="{% if edition %}{{ edition.get_participant_scores_url }}{% else %}{% url 'scores_total' year=edition.year %}{% endif %}">
+                                Scores
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'edition_media' year=edition.year %}" href="{{ edition.get_media_url }}">Media</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'committee' year=edition.year %}" href="{% url 'committee' year=edition.year %}">Committee</a>
+                        </li>
+                        {% if edition == latest_edition %}
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'radio' %}" href="{% url 'radio' %}">Pando Radio</a>
+                            </li>
+{#                            <li class="nav-item">#}
+{#                                <a class="nav-link" href="https://tv.iapandora.nl" target="tv">TV</a>#}
+{#                            </li>#}
+                        {% endif %}
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'admin:index' %}" href="{% url 'admin:index' %}">Admin</a>
+                            </li>
+                        {% endif %}
+                        {% if edition %}
+                            {% if committee_member %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% active 'committee_dashboard' year=edition.year %}" href="{% url 'committee_dashboard' year=edition.year %}">Committee</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'dashboard' year=edition.year %}" href="{% url 'dashboard' year=edition.year %}">Dashboard</a>
+                            </li>
+                            {% if team %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% active 'participant_team' year=edition.year pk=team.id %}" href="{% url 'participant_team' year=edition.year pk=team.id %}">Team</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'account_profile' %}" href="{% url 'account_profile' %}">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% active 'account_logout' %}" href="{% url 'account_logout' %}">Sign out</a>
+                            </li>
+                        {%  endif %}
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'account_login' %}" href="{% url 'account_login' %}">Sign in</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,41 @@
+{% extends 'page/one_column.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+{% load util %}
+
+{% block title %}Media{% endblock %}
+{% block page_title %}{{ 'Media'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    {% if edition.is_ended %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'participant_puzzle_codes' year=edition.year %}" href="{% url 'participant_puzzle_codes' year=edition.year %}">
+                                <i class="bi bi-puzzle me-1" aria-hidden="true"></i>
+                                Puzzles
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'edition_media' year=edition.year type='videos' %}" href="{% url 'edition_media' year=edition.year type='videos' %}">
+                            <i class="bi bi-film me-1" aria-hidden="true"></i>
+                            Videos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'edition_media' year=edition.year type='other' %}" href="{% url 'edition_media' year=edition.year type='other' %}">
+                            <i class="bi bi-file-earmark me-1" aria-hidden="true"></i>
+                            Other
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    {% block items %}{% endblock %}
+{% endblock %}

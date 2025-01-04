@@ -1,0 +1,52 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Teams{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Teams'|colour_first_letter }}</h3>
+
+                <div class="mb-3">
+                    {% bootstrap_button button_type='link' href=edition.get_team_member_export_url content='Export team members' %}
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Status</th>
+                                <th>Name</th>
+                                <th>Members</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for team in teams %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ team.get_status_display }}</td>
+                                    <td>{{ team.name }}</td>
+                                    <td>{{ team.members.count }}</td>
+                                    <td class="py-1">
+                                        {% bootstrap_button button_type='link' href=team.get_absolute_url content='View' %}
+{#                                        {% bootstrap_button button_type='link' href=team.get_update_url content='Edit' %}#}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="fst-italic">No events available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

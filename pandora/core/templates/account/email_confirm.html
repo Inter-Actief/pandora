@@ -1,0 +1,30 @@
+{% extends 'page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/email_confirm.html #}
+
+{% load account %}
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Confirm E-mail Address{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Confirm E-mail Address'|colour_first_letter }}</h3>
+
+    {% if confirmation %}
+        {% user_display confirmation.email_address.user as user_display %}
+        {% define confirmation.email_address.email as email %}
+
+        <p>Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.</p>
+
+        <form method="POST" action="{% url 'account_confirm_email' confirmation.key %}">
+            {% csrf_token %}
+
+            {% bootstrap_button button_type="submit" content="Confirm" %}
+        </form>
+    {% else %}
+        {% url 'account_email' as email_url %}
+
+        <p>This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Teams - {{ team.name }}{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ team.name|colour_first_letter }}</h3>
+
+                <section class="my-4">
+                    <h4>{{ 'Profile'|colour_first_letter }}</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ team.name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>{{ team.get_status_display }} team</td>
+                                </tr>
+                                <tr>
+                                    <th>Website</th>
+                                    <td>
+                                        {% if team.website %}
+                                            {{ team.website|urlize }}
+                                        {% else %}
+                                            <em>None</em>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Logo</th>
+                                    <td>
+                                        {% if team.image %}
+                                            <img class="img-fluid" src="{{ team.image_url }}" alt="Logo of {{ team.name }}" style="max-height: 256px;" />
+                                        {% else %}
+                                            <em>None</em>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="my-4">
+                    <h4>{{ 'Members'|colour_first_letter }}</h4>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Pandora Name</th>
+                                    <th>Name</th>
+                                    {% if day %}
+                                        <th>Status (Day {{ day.number }})</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for member in team.members.all|dictsort:'name'  %}
+                                    <tr>
+                                        <td>{{ member.name }}</td>
+                                        <td>{{ member.user.get_full_name }}</td>
+                                        {% if day %}
+                                            <td>
+                                                {% if not member.current_kill_code %}
+                                                    -
+                                                {% elif member.current_kill_code.is_killed %}
+                                                    Dead
+                                                {% else %}
+                                                    Alive
+                                                {% endif %}
+                                            </td>
+                                        {% endif %}
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="fst-italic">No members available.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+
+                <section class="my-4">
+                    <h4>{{ 'Bonuses & Offences'|colour_first_letter }}</h4>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Reason</th>
+                                    <th>Team member</th>
+                                    <th>Score</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for score_modification in team.score_modifications.all|dictsort:'created_at' %}
+                                    <tr>
+                                        <td>{{ score_modification.get_type_display }}</td>
+                                        <td>{{ score_modification.reason }}</td>
+                                        <td>
+                                            {% if score_modification.team_member %}
+                                                {{ score_modification.team_member.name }}
+                                            {% else %}
+                                                -
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ score_modification.amount }}</td>
+                                        <td class="py-1">
+                                            {% bootstrap_button button_type='link' href=score_modification.get_update_url content='Edit' %}
+                                            {% bootstrap_button button_type='link' button_class='btn-danger' href=score_modification.get_delete_url content='Delete' %}
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="fst-italic">No bonuses or offenses available.</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {% bootstrap_button button_type='link' href=team.get_score_modification_create_url content='Create score modification' %}
+                </section>
+            </div>
+        </div>
+    </section>
+{% endblock %}

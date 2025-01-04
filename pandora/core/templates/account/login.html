@@ -1,0 +1,52 @@
+{% extends 'page/simple_narrow.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/login.html #}
+
+{% load socialaccount %}
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Sign In'|colour_first_letter }}</h3>
+
+    <p>An account can be used for multiple Pandora editions. You can choose a new Pandora name for each edition you participate in.</p>
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <div class="mb-3">
+            <p>Sign in with an existing third party account:</p>
+            {% include 'socialaccount/snippets/provider_list.html' with process="login" %}
+        </div>
+
+        <p>Or sign in using your e-mail and password:</p>
+
+        {% block scripts %}
+            {% include 'socialaccount/snippets/login_extra.html' %}
+        {% endblock %}
+    {% endif %}
+
+    <form method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+
+        {% bootstrap_form form label_class='fw-bold' %}
+
+        <div class="d-flex justify-content-between flex-column flex-md-row">
+            {% bootstrap_button button_type="submit" content="Sign in" %}
+
+            <div class="d-flex justify-content-between d-md-block mt-3 mt-md-0">
+                {% url 'account_signup' as signup_url %}
+                {% bootstrap_button button_type="link" href=signup_url content="Sign up" %}
+
+                {% url 'account_reset_password' as reset_password_url %}
+                {% bootstrap_button button_type="link" href=reset_password_url content="Forgot password?" %}
+            </div>
+        </div>
+    </form>
+{% endblock %}

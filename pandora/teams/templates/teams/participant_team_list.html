@@ -1,0 +1,50 @@
+{% extends 'page/two_columns.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Teams{% endblock %}
+{% block page_title %}{{ 'Teams'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    {% for team in teams %}
+        <div class="col mb-4 d-flex">
+            <div class="card flex-fill">
+                <div class="card-body">
+                    <div class="row g-0">
+                        <div class="col-4 pe-3">
+                            {% if team.image %}
+                                <img class="img-fluid" src="{{ team.image_url }}" alt="Logo of {{ team.name }}" />
+                            {% endif %}
+                        </div>
+                        <div class="col-8">
+                            <h3>
+                                {{ team.name|colour_first_letter }}
+                            </h3>
+                            {% if team.status != 'ACTIVE' %}
+                                <h5>{{ team.get_status_display }} team</h5>
+                            {% endif %}
+                            <h5>Members</h5>
+                            <ul>
+                                {% for member in team.members.all|dictsort:'name' %}
+                                    <li>{{ member.name }}</li>
+                                {% empty %}
+                                    <li class="fst-italic">No members available.</li>
+                                {% endfor %}
+                            </ul>
+
+                            {% bootstrap_button button_type="link" href=team.get_participant_url content="View team" %}
+                            {% if team.website %}
+                                {% bootstrap_button button_type="link" href=team.website target="website" content="View website" %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col fst-italic">
+            No teams available.
+        </div>
+    {% endfor %}
+{% endblock %}

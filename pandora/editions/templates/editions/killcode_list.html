@@ -1,0 +1,81 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Kill Codes{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Kill Codes'|colour_first_letter }}</h3>
+
+                <div class="mb-3">
+                    {% bootstrap_button button_type='link' href=edition.get_kill_code_generate_url content='Generate kill codes' %}
+                </div>
+
+                <ul class="nav nav-pills mb-3">
+                    {% for day in edition.ordered_days %}
+                        <li class="nav-item">
+                            <a class="nav-link {% active 'kill_codes' year=edition.year day_number=day.number %}" href="{% url 'kill_codes' year=edition.year day_number=day.number %}">
+                                Day {{ day.number }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="mb-3">
+                    {% bootstrap_button button_type='link' href=day.get_kill_code_export_url content='Export kill codes' %}
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if kill_codes.exists %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Team</th>
+                                <th>Team member</th>
+                                <th>Code</th>
+                                <th>Is alive</th>
+                                <th>Killer team</th>
+                                <th>Killer team member</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for kill_code in kill_codes %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td>{{ kill_code.team_member.team.name }}</td>
+                                    <td>{{ kill_code.team_member.name }}</td>
+                                    <td class="font-monospace">{{ kill_code.code }}</td>
+                                    <td>{{ kill_code.is_killed|yesno:'No,Yes' }}</td>
+                                    <td>
+                                        {% if kill_code.kill %}
+                                            {{ kill_code.kill.killer.team.name }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if kill_code.kill %}
+                                            {{ kill_code.kill.killer.name }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="fst-italic">No kill codes available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

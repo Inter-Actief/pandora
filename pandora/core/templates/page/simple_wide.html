@@ -1,0 +1,16 @@
+{% extends 'page/simple.html' %}
+
+{% load static %}
+
+{% block simple_content %}
+    <section class="row justify-content-center my-4">
+        <div class="col-12 col-md-12 col-lg-10 col-xl-8">
+            <div class="card">
+                <div class="card-body">
+                    {% block card_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'page/rows.html' %}
+
+{% load static %}
+{% load util %}
+
+{% block title %}Pando Radio{% endblock %}
+{% block page_title %}{{ 'Pando Radio'|colour_first_letter }}{% endblock %}
+
+{% block rows %}
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h2>{{ 'Listen along!'|colour_first_letter }}</h2>
+                <audio src="https://radio.iapandora.nl/pandoradio" controls>Your browser does not support the audio element.</audio>
+            </div>
+        </div>
+    </section>
+{% endblock %}

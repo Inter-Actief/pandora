@@ -1,0 +1,26 @@
+{% extends 'page/../page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/socialaccount/login.html #}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block card_content %}
+   {% if process == "connect" %}
+        <h3>{{ 'Connect'|colour_first_letter }} {{ provider.name }}</h3>
+
+        <p>You are about to connect a new third party account from {{ provider.name }}.</p>
+    {% else %}
+        <h3>{{ 'Sign In With'|colour_first_letter }} {{ provider.name }}</h3>
+
+        <p>You are about to sign in using a third party account from {{ provider.name }}.</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {% bootstrap_button button_type="submit" content="Continue" %}
+    </form>
+{% endblock %}

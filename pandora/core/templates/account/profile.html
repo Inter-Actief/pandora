@@ -1,0 +1,135 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load oauth %}
+{% load qr_code %}
+{% load team %}
+{% load util %}
+
+{% block title %}Profile{% endblock %}
+
+{% block card_content %}
+    {% current_team_member as team_member %}
+
+    <h3>{{ 'Account'|colour_first_letter }}</h3>
+
+    <p>
+        An account can be used for multiple Pandora editions.
+        Please use your real name, it will only be visible to your team and the committee.
+        After joining a team, you can choose your Pandora name.
+    </p>
+
+    <section class="my-4">
+        <h4>{{ 'Profile'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ user.get_full_name }}</td>
+                    </tr>
+                    {% if team_member %}
+                        <tr>
+                            <th>QR code</th>
+                            <td>
+                                Show this QR code at the start of each meeting:
+
+                                <a class="d-block my-2" href="{% qr_url_from_text team_member.code size='l' %}">
+                                    <img class="img-fluid bg-white" src="{% qr_url_from_text team_member.code size='m' %}" alt="QR code" />
+                                </a>
+
+                                <em>Click the QR code for a larger image.</em>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        {% url 'account_profile_update' as update_url %}
+        {% bootstrap_button button_type='link' href=update_url content='Change details' %}
+    </section>
+
+    <section class="my-4">
+        <h4>{{ 'Email Addresses'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Email Address</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for email_address in user.emailaddress_set.all|dictsort:'email'  %}
+                        <tr>
+                            <td>{{ email_address.email }}</td>
+                            <td>
+                                {% if email_address.verified %}
+                                    <span class="badge bg-primary text-black">Verified</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Unverified</span>
+                                {% endif %}
+                                {% if email_address.primary %}
+                                    <span class="badge bg-primary text-black">Primary</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="1" class="fst-italic">No email addresses available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% url 'account_email' as emails_url %}
+        {% bootstrap_button button_type='link' href=emails_url content='Change email addresses' %}
+    </section>
+
+    <section class="my-4">
+        <h4>{{ 'Password'|colour_first_letter }}</h4>
+    
+        {% url 'account_change_password' as change_password_url %}
+        {% bootstrap_button button_type='link' href=change_password_url content='Change password' %}
+    </section>
+
+    <section class="my-4">
+        <h4>{{ 'Connections'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Name</th>
+                        <th>Email address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for social_account in user.socialaccount_set.all|dictsort:'provider'  %}
+                        {% define social_account.get_provider as provider %}
+                        {% get_provider_app_name provider as provider_name %}
+                        {% define social_account.get_provider_account as provider_account %}
+
+                        <tr>
+                            <td>{{ provider_name }}</td>
+                            <td>{{ provider_account.to_str }}</td>
+                            <td>{{ social_account.extra_data.email }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2" class="fst-italic">No connections available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% url 'socialaccount_connections' as connections_url %}
+        {% bootstrap_button button_type='link' href=connections_url content='Change connections' %}
+    </section>
+{% endblock %}

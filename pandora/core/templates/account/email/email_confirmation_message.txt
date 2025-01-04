@@ -1,0 +1,6 @@
+{% extends 'account/email/base_message.txt' %}
+{% block content %}
+Please confirm your email address by clicking the link below.
+
+{{ activate_url }}
+{% endblock %}

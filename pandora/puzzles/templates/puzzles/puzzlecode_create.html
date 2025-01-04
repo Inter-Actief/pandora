@@ -1,0 +1,18 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Create Puzzle Code{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Create Puzzle Code'|colour_first_letter }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form label_class='fw-bold' %}
+
+        {% bootstrap_button button_type='submit' content='Create puzzle code' %}
+    </form>
+{% endblock %}

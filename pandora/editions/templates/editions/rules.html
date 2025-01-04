@@ -1,0 +1,347 @@
+{% extends 'page/rows.html' %}
+
+{% load static %}
+{% load util %}
+
+{% block title %}Rules{% endblock %}
+{% block page_title %}{{ 'Rules'|colour_first_letter }}{% endblock %}
+
+{% block rows %}
+    <section class="mb-4">
+        <div class="card">
+            <div class="card-body">
+                <p>
+                    The rules are composed to make sure Pandora is fun for everybody. It may be possible that the rules do not cover all situations. In this
+                    case it is up to the committee to decide exactly what will happen.
+                </p>
+                <p>
+                    To have everyone at the same level when playing Pandora take a good look at the following files, they contain translations of locations
+                    on the campus, a map of the campus with areas marked which are completely forbidden or just free of fighting and a guide to Pandora
+                    itself.
+                </p>
+                <p>
+                    <ul>
+                        <li><a href="{% static 'pdf/pandora_campusmap.pdf' %}">Campus map with forbidden areas</a></li>
+                        <li><a href="{% static 'pdf/TranslationsOfBuildingNames.pdf' %}">Translation of building names</a></li>
+                        <li><a href="{% static 'pdf/TranslationsOfWorksOfArt.pdf' %}">Translation of works of art</a></li>
+                        <li><a href="{% static 'pdf/architecture-and-art-walking-tour.pdf' %}">Architecture & Art brochure</a></li>
+                        <li><a href="{% static 'pdf/How-to_Pandora.pdf' %}">Guide to Pandora</a></li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-7 mb-2 mb-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Sportmanship'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-thumbs-up"></span>
+                        The goal of Pandora is to collect as many points as possible, but above all to have fun.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-minus-circle"></span>
+                        It is forbidden to hinder other teams and to steal their weapons, puzzles or classified information.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-minus-circle"></span>
+                        It is forbidden to hack the Pandora website.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-volume-up"></span>
+                        It is allowed to eavesdrop on other teams, conduct intelligence missions or pilfer their puzzle solutions.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-warning"></span>
+                        Teams must keep puzzles to themselves.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-2 mt-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/sportsmanship.jpg' %}" alt="" />
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/safety.jpg' %}" alt="" />
+        </div>
+        <div class="col-12 col-md-7 mt-2 mt-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Safety / hindrance'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-warning"></span>
+                        Obey the campus security at all times and do not act suspiciously. Wear your bracelet at all times, even when you are 'dead'.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-tree"></span>
+                        Non-participants should not be hindered in any way. Be aware of this, especially during fights.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-globe"></span>
+                        The Pandora playing field does not cover the whole campus. Some areas are forbidden at nighttime. Take a look at the files on the
+                        top of this page for a complete overview.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-volume-off"></span>
+                        It is forbidden to cause noise disturbance.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-road"></span>
+                        It is forbidden to use motorized vehicles while playing Pandora.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-fire"></span>
+                        The committee is not responsible for any damage, accidents, wet clothes or lost time.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-home"></span>
+                        It is forbidden to shoot or fight inside.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-briefcase"></span>
+                        Do not circumvent fences at construction sites, they are placed for a reason. If a puzzle is located near a construction site,
+                        it will always be on the outside of the fences or in the vicinity of the construction site.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-trash"></span>
+                        Do not litter.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-trash"></span>
+                        Make sure to check for ticks when you search in bushes or tall grass.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-trash"></span>
+                        It is forbidden to create your own puzzle with the template of the committee.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-7 mb-2 mb-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Puzzles'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-question"></span>
+                        Solving a puzzle gets you points, requesting a hint will cost you points.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-eye"></span>
+                        All clues are marked with the Pandora logo and will be clearly recognizable as being part of Pandora.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-search"></span>
+                        All clues can be found within the playing field. Take a look at the files at the top of this page for a complete overview. The clues
+                        are all accessible during day- and nighttime.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-barcode"></span>
+                        Every puzzle contains a unique code. These codes need to be submitted to the website to indicate you found a puzzle. You get points
+                        as soon as you submit the code.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-flash"></span>
+                        It is strictly forbidden to sabotage, change or take clues (unless explicitly stated).
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-clock-o"></span>
+                        Puzzles can be submitted until the next meeting. The closing drink also counts as a meeting.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-users"></span>
+                        Teams have a maximum of 6 members who are allowed to play and puzzle.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-2 mt-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/puzzles2.jpg' %}" alt="" />
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/kills.jpg' %}" alt="" />
+        </div>
+        <div class="col-12 col-md-7 mt-2 mt-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Kills'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-heart-o"></span>
+                        Killing a member of another team earns you points. You can only kill others with weapons given to you by the organization. Only
+                        people who are still alive and carry their kill codes are allowed to kill others.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-map-marker"></span>
+                        You can only kill others when you are both within the playing field.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-exchange"></span>
+                        Every team member has its own unique kill code. It is forbidden to (temporarily) switch or hand over your personal kill code to your
+                        teammate.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-home"></span>
+                        It is forbidden by law to break into peoples houses so this is obviously also not allowed during Pandora. Opened doors or windows
+                        <b><i>DO NOT</i></b> invite attacks.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-barcode"></span>
+                        A kill code is valid for 1 day. The kill codes are all distributed at the start.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-7 mb-2 mb-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Appearance'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-user"></span>
+                        Team members who are alive can only carry one weapon at a time.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-check"></span>
+                        Team members who are alive have to have their bracelet easily visible on their arm (and showing the white color) at any moment when within the
+                        playing field.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-remove"></span>
+                        Team members who are no longer in possession of their kill code should wear their bracelet with the red side facing outwards.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-bell"></span>
+                        Team members who are no longer in possession of their kill code should not be carrying a weapon and cannot interfere in fights.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-bullhorn"></span>
+                        All team members should answer clearly when being asked whether they still have their kill codes.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-2 mt-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/appearance.jpg' %}" alt="" />
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/fights.jpg' %}" alt="" />
+        </div>
+        <div class="col-12 col-md-7 mt-2 mt-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Fights'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-ban"></span>
+                        It is forbidden to use weapons in other ways than the conventional one. For example, it is forbidden to throw a blowpipe or a pool
+                        noodle.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-bullseye"></span>
+                        Parrying is not allowed.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-magnet"></span>
+                        Camouflaging or making aesthetic changes to a weapon is allowed as long as it does not alter the functionality or power of the
+                        weapon. Bonus weapons form an exception to the previous rule and may not be altered at all. Also the bonus weapons need to be handed
+                        in to the committee before the end of the week in the state in which they were delivered.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-file"></span>
+                        Only the provided blowpipe darts may be used. It is not allowed to make or bring your own darts.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-pause"></span>
+                        Combat is allowed at all times.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-ban"></span>
+                        It is forbidden to switch weapons during a fight.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-thumb-tack"></span>
+                        It is forbidden to physically or mentally hurt people.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-7 mb-2 mb-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Meetings'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-clock-o"></span>
+                        Timely attendance during the meetings is mandatory. If a team member cannot be present, the committee should be notified as soon as
+                        possible and the team member is not allowed to be anywhere on the playing field during the meeting. When notification occurs within
+                        the last 2 hours before the meeting or a notification is not received at all, the committee can impose penalties to the
+                        corresponding team.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-id-card-o"></span>
+                        Team members are obligated to bring their student card to every meeting.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-5 mt-2 mt-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/meetings2.jpg' %}" alt="" />
+        </div>
+    </section>
+
+    <section class="row my-4">
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <img class="img-fluid rounded" src="{% static 'images/photos/regulations.jpg' %}" alt="" />
+        </div>
+        <div class="col-12 col-md-7 mt-2 mt-md-0">
+            <div class="card">
+                <div class="card-body">
+                    <h2>{{ 'Regulations'|colour_first_letter }}</h2>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-check"></span>
+                        The committee is always right.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-phone"></span>
+                        We need to be able to contact your team at any time, therefore the phone number of your team needs to be available at all times
+                        during Pandora (best effort).
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-asterisk"></span>
+                        The committee is allowed to make a change or deviate from the rules at all times and without announcement.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-bookmark"></span>
+                        The committee is allowed to hand out bonus points or penalties to teams or change the scoring in retrospect at all times and
+                        without announcement.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-comment"></span>
+                        When the rules do not cover a situation, first try to come up with a solution yourselves. If this fails the committee decides.
+                    </p>
+                    <p>
+                        <span class="fa fa-fw fa-lg fa-gift"></span>
+                        Of course it is encouraged to bribe the committee. More than welcome would be
+                        (craft) beer, Starbucks and/or your best live performance to the committee. It is common to receive rewards for your bribes!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

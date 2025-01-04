@@ -1,0 +1,96 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Hint{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Hint'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th>Time</th>
+                                <td>{{ hint.created_at|date:'l j F H:i' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Team</th>
+                                <td>{{ hint.team.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone number</th>
+                                <td>
+                                    {% if hint.phone_number %}
+                                        {{ hint.phone_number }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Puzzle</th>
+                                <td>
+                                    {% call hint.code 'get_found_for_team' hint.team as found %}
+
+                                    Day {{ hint.code.day.number }}
+                                    -
+                                    Puzzle {{ hint.code.number }}
+                                    -
+                                    {% if found %}
+                                        {{ hint.code.puzzle.name }}
+                                    {% else %}
+                                        ?
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Comment</th>
+                                <td>{{ hint.comment }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>{{ hint.get_status_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Score</th>
+                                <td>
+                                    {{ hint.score }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Committee member</th>
+                                <td>
+                                    {% if hint.committee_member %}
+                                        {{ hint.committee_member.user.get_full_name }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Committee comment</th>
+                                <td>
+                                    {% if hint.committee_comment %}
+                                        {{ hint.committee_comment }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {% bootstrap_button button_type='link' href=hint.get_update_url content='Change hint' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

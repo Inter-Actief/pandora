@@ -1,0 +1,49 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Settings{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Settings'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if settings.exists %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Key</th>
+                                <th>Value</th>
+                                <th>Default value</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for setting in settings %}
+                                <tr>
+                                    <th>{{ forloop.counter }}</th>
+                                    <td class="font-monospace">{{ setting.key }}</td>
+                                    <td class="font-monospace">{{ setting.value }}</td>
+                                    <td class="font-monospace">{{ setting.default_value }}</td>
+                                    <td class="py-1">
+                                        {% bootstrap_button button_type='link' href=setting.get_update_url content='Edit' %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="fst-italic">No settings available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

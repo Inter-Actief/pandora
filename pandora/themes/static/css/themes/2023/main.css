@@ -1,0 +1,106 @@
+body {
+    background-image: url('/static/images/themes/2023/back_layer_trees.png');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Logo */
+
+.logo {
+    height: 300px;
+}
+
+.large-logo {
+    max-width: 100vw;
+    height: 80vh;
+    margin-bottom: 10vh;
+}
+
+.large-logo  * {
+    max-width: 100% !important;
+}
+
+.fancy-logo {
+    position: relative;
+    width: 100%;
+    height: 80%;
+}
+
+.fancy-logo img {
+    position: absolute;
+    height: 100%;
+}
+
+.fancy-logo .fairy {
+    animation-name: fairy-fly;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+
+.large-logo .title {
+    max-width: min(600px, 100%)!important;
+    z-index: 1;
+}
+
+@keyframes fairy-fly {
+    from {bottom: -8vh}
+    to {bottom: 8vh}
+}
+
+/* Background */
+
+#background  {
+    position: fixed;
+    z-index: -1;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+}
+
+#background-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#background-wrapper div {
+    height: 100%;
+    width: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+}
+
+#background-wrapper #stars {
+    background-image: url('/static/images/themes/2023/stars.png');
+    animation-name: stars-fade;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+}
+
+#background-wrapper #trees {
+    background-image: url('/static/images/themes/2023/back_layer_trees.png');
+}
+
+#background-wrapper #vegetation {
+    background-image: url('/static/images/themes/2023/front_layer.png');
+}
+
+#background-wrapper #castlewall {
+    background-image: url('/static/images/themes/2023/mid_layer_castle.png');
+}
+
+@keyframes stars-fade {
+    from {opacity: 100%}
+    to {opacity: 30%}
+}

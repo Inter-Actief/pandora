@@ -1,0 +1,89 @@
+body {
+    background-image: url('/static/images/themes/2024/sky.png');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.table {
+    --bs-table-color: black;
+    --bs-table-bg: #f8f4c0;
+}
+
+.card {
+    background-color: #f8f4c0;
+}
+
+.logo {
+    height: 300px;
+}   
+
+.large-logo {
+    max-width: 100vw;
+    height: 80vh;
+    margin-bottom: 10vh;
+}
+
+.large-logo  * {
+    max-width: 100% !important;
+}
+
+.fancy-logo {
+    position: relative;
+    width: 100%;
+    height: 80%;
+}
+
+.fancy-logo img {
+    position: absolute;
+    height: 100%;
+}
+
+.large-logo .title {
+    max-width: min(600px, 100%)!important;
+    z-index: 1;
+}
+
+
+#background  {
+    position: fixed;
+    z-index: -1;
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+}
+
+#background-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+#background-wrapper div {
+    height: 100%;
+    width: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    top: 0;
+}
+
+#background-wrapper #sky {
+    background-image: url('/static/images/themes/2024/sky.png');
+}
+
+#background-wrapper #sea {
+    background-image: url('/static/images/themes/2024/sea.png');
+}
+
+#background-wrapper #land {
+    background-image: url('/static/images/themes/2024/land.png');
+}
+
+#background-wrapper #cloud {
+    background-image: url('/static/images/themes/2024/cloud.png');
+}

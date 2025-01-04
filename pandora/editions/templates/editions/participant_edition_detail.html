@@ -1,0 +1,174 @@
+{% extends 'base/index.html' %}
+
+{% load edition %}
+{% load static %}
+{% load util %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+    {% latest_edition as latest_edition %}
+
+    <div class="container">
+        {# Theme header #}
+        {% if edition and not edition.is_theme_hidden %}
+            {% include edition.theme_header_template %}
+        {% endif %}
+
+        {% if edition %}
+            <section class="my-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>{{ 'Pandora'|colour_first_letter }} {{ edition.year }}{% if not edition.is_theme_hidden %} - {{ edition.name }}{% endif %}</h2>
+                        {% if edition.start_day %}
+                            <h4>{{ edition.start|date:'j F' }} - {{ edition.end|date:'j F' }}</h4>
+                        {% endif %}
+
+                        {% if edition.is_before_hype_drink_event %}
+                            <div class="mt-4">
+                                <h4>{{ 'Hype Drink'|colour_first_letter }}</h4>
+                                <h5>{{ edition.hype_drink_event.start|date:'j F H:i' }} @ Abscint</h5>
+                                <h5 id="countdown-pregame">{{ edition.hype_drink_event.start|timeuntil }}</h5>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if edition == latest_edition %}
+            <section class="my-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>{{ 'What is Pandora?'|colour_first_letter }}</h2>
+                        <p>
+                            Pandora is a five-day puzzle hunt on the campus of the University of Twente by Inter-Actief
+                            members. Solving puzzles in teams and
+                            killing off members of rivaling teams grants a certain amount of points. Every evening a meeting
+                            will take place on campus in which
+                            information is provided to aid your quest. In addition, the story (which relates to the
+                            edition's theme) progresses every time through
+                            acting.
+                        </p>
+                        <p>
+                            Participants of Pandora receive a range of weapons from the organization, which can be used to
+                            take care of
+                            opponents (fellow participants). Furthermore, participants have to solve puzzles with the hints
+                            that are hidden all over campus.
+                        </p>
+                        <p>
+                            The first meeting (after which Pandora will take off) always takes place on the Monday evening.
+                            The location and time will be timely
+                            announced by the organization. There is a participation fee which is used to finance weapons,
+                            among others. Before Pandora, the theme
+                            and committee will be revealed during the Pandora Hype Drink. During this drink registration
+                            opens, and you can participate in the
+                            pregame. The pregame is a warming-up for Pandora, a game which differs from year to year.
+                        </p>
+                        <p>
+                            This website is made for Pandora {% latest_edition_year %}, the most recent edition.
+                            Information concerning previous editions is available in the archive.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="row my-4">
+                <div class="col-12 col-md-7 my-2 my-md-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>{{ 'Join us'|colour_first_letter }}</h2>
+                            <p>
+                                Participation in Pandora will definitely bring you a week packed with excitement, mystery,
+                                paranoia and action! It's also full-time,
+                                as you are never safe. Whether you are attending lectures, walking in the Coop or laying in
+                                bed, danger is right around the
+                                corner(and a hostile housemate oftentimes as well!).
+                            </p>
+                            <p>
+                                An account can be used for multiple Pandora editions, so you can already sign up before
+                                Pandora starts.
+                                Team registration will open during the hype drink.
+                            </p>
+                            <a class="btn btn-lg btn-primary" href="{% url 'account_login' %}">Sign up now!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 my-2 my-md-0">
+                    <img class="img-fluid rounded" src="{% static 'images/photos/join.jpg' %}" alt="" />
+                </div>
+            </section>
+        {% else %}
+            <section class="my-4">
+                <div class="card">
+                    <div class="card-body">
+                         <h2>{{ 'Archived edition'|colour_first_letter }}</h2>
+                        <p>
+                            You are viewing an archived edition of Pandora.
+                            Any available information about puzzles, teams, scores and more can be found using the navigation bar.
+                        </p>
+                        <a class="btn btn-primary" href="{% url 'home' %}">View latest edition</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="my-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>{{ 'Archive'|colour_first_letter }}</h2>
+                        <p>
+                            Pandora has been around for years, and thus has a rich history. It is one of the oldest events hosted by Inter-Actief.
+                        </p>
+                        <p>
+                            The archived editions exist since 2014 and convey information about earlier Pandora editions.
+                            Little is known about the older editions.
+                            Before 2017, Pandora was held in Dutch and thus the archive about editions earlier than 2017 will be in Dutch.
+                            If you happen to have information regarding earlier Pandora editions, please
+                            <a href="{% url 'committee' year=latest_edition.year %}">contact the current committee</a> or send a mail to
+                            <a href="mailto:contact@inter-actief.net">contact@inter-actief.net</a> if no committee has been appointed yet.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {# Theme footer #}
+        {% if edition and not edition.is_theme_hidden %}
+            {% include edition.theme_footer_template %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {% if edition and edition.is_before_hype_drink_event %}
+        <script type="application/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                const countdowns = [
+                    [
+                        document.getElementById('countdown-pregame'),
+                        luxon.DateTime.fromISO('{{ edition.hype_drink_event.start|date:'c' }}')
+                    ]
+                ];
+
+                setInterval(() => {
+                    const now = luxon.DateTime.now();
+
+                    for (const [element, nextTime] of countdowns) {
+                        if (now >= nextTime) {
+                            window.location.reload();
+                            return;
+                        }
+
+                        const diff = nextTime.diff(now);
+
+                        let text = diff.rescale().toHuman();
+                        if (text.includes('millisecond')) {
+                            text = text.substring(0, text.lastIndexOf(','))
+                        }
+                        element.textContent = text;
+                    }
+                }, 1000);
+            });
+        </script>
+    {% endif %}
+{% endblock %}

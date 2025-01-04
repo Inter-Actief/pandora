@@ -1,0 +1,75 @@
+{% extends 'page/one_column.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }}{% endblock %}
+{% block page_title %}{{ edition.year|stringformat:'i'|colour_first_letter }}{% endblock %}
+
+{% block columns %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'teams' year=edition.year %}" href="{% url 'teams' year=edition.year %}">
+                            <i class="bi bi-people me-1" aria-hidden="true"></i>
+                            Teams
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {# {% active '' year=edition.year %} #}" href="{# {% url '' year=edition.year %} #}">
+                            <i class="bi bi-star me-1" aria-hidden="true"></i>
+                            Scores
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'events' year=edition.year %}" href="{% url 'events' year=edition.year %}">
+                            <i class="bi bi-calendar-event me-1" aria-hidden="true"></i>
+                            Events
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'puzzles' year=edition.year %}" href="{% url 'puzzles' year=edition.year %}">
+                            <i class="bi bi-puzzle me-1" aria-hidden="true"></i>
+                            Puzzles
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'solves' year=edition.year %} {% active 'solves_bonus' year=edition.year %}" href="{% url 'solves' year=edition.year day_number=edition.url_day_number %}">
+                            <i class="bi bi-clipboard2-check me-1" aria-hidden="true"></i>
+                            Solves
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'hints' year=edition.year %}" href="{% url 'hints' year=edition.year %}">
+                            <i class="bi bi-question-circle me-1" aria-hidden="true"></i>
+                            Hints
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'kill_codes' year=edition.year %}" href="{% url 'kill_codes' year=edition.year day_number=edition.url_day_number %}">
+                            <i class="bi bi-upc-scan me-1" aria-hidden="true"></i>
+                            Kill codes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'kills' year=edition.year %}" href="{% url 'kills' year=edition.year day_number=edition.url_day_number %}">
+                            <i class="bi bi-bullseye me-1" aria-hidden="true"></i>
+                            Kills
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% active 'edition_settings' year=edition.year %}" href="{% url 'edition_settings' year=edition.year %}">
+                            <i class="bi bi-gear me-1" aria-hidden="true"></i>
+                            Settings
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    {% block sections %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base/index.html' %}
+
+{% block title %}Event Scanner{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div id="scanner" class="bg-white"></div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="application/javascript" src="https://unpkg.com/html5-qrcode/html5-qrcode.min.js"></script>
+
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementToast = document.getElementById('toast');
+            const elementToastBody = document.getElementById('toast-body');
+
+            // Initialize WebSocket
+            const webSocket = new ReconnectingWebSocket('{{ websocket_url }}');
+
+            let lastCode = null;
+            let lastCodeTimeoutId = null;
+
+            const onScanSuccess = (code) => {
+                if (lastCode === code) {
+                    return;
+                }
+
+                // Set last code, so the code is only scanned once
+                lastCode = code;
+
+                if (lastCodeTimeoutId) {
+                    clearTimeout(lastCodeTimeoutId);
+                }
+
+                lastCodeTimeoutId = setTimeout(() => {
+                    // Reset last code, so the code can be tried again
+                    lastCode = null;
+                }, 3000);
+
+                webSocket.send(JSON.stringify({
+                    code
+                }));
+            };
+
+            const onScanFailure = (_err) => {
+                // NOTE: this prints continuous errors while scanning, so only uncomment this line for debugging.
+                // console.error(err);
+            };
+
+            const onMessage = (event) => {
+                try {
+                    window.toast.hide();
+                    elementToast.classList.remove('text-bg-success', 'text-bg-danger');
+
+                    const data = JSON.parse(event.data);
+
+                    if (data.status === 'present') {
+                        elementToast.classList.add('text-bg-success');
+                        elementToastBody.innerHTML = `
+                            <span class="d-block fw-bold">${data.name}</span>
+                            <span class="d-block">${data.team.name} - ${data.member.name}</span>
+                        `;
+                        window.toast.show();
+                    } else {
+                        elementToast.classList.add('text-bg-danger');
+                        elementToastBody.textContent = data.message;
+                        window.toast.show();
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            // Add WebSocket event listeners
+            webSocket.addEventListener('message', onMessage)
+
+            // Initialize QR code scanner
+            const scanner = new Html5QrcodeScanner('scanner', {})
+            scanner.render(onScanSuccess, onScanFailure);
+        });
+    </script>
+{% endblock %}

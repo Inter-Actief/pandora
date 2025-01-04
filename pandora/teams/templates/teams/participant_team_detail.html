@@ -1,0 +1,157 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ team.name }}{% endblock %}
+
+{% block card_content %}
+    <h3>{{ team.name|colour_first_letter }}</h3>
+
+    <section class="my-4">
+        <h4>{{ 'Profile'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ team.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ team.get_status_display }} team</td>
+                    </tr>
+                    <tr>
+                        <th>Website</th>
+                        <td>
+                            {% if team.website %}
+                                {{ team.website|urlize }}
+                            {% else %}
+                                <em>None</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Logo</th>
+                        <td>
+                            {% if team.image %}
+                                <img class="img-fluid" src="{{ team.image_url }}" alt="Logo of {{ team.name }}" style="max-height: 256px;" />
+                            {% else %}
+                                <em>None</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        {% if is_member %}
+            {% if is_edit_allowed %}
+                {% bootstrap_button button_type='link' href=team.get_participant_update_url content='Change profile' extra_classes=extra_button_classes %}
+            {% else %}
+                {% bootstrap_button button_type='link' href=team.get_participant_partial_update_url content='Change profile' extra_classes=extra_button_classes %}
+            {% endif %}
+        {% endif %}
+    </section>
+
+    <section class="my-4">
+        <h4>{{ 'Members'|colour_first_letter }}</h4>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Pandora Name</th>
+                        {% if is_member or is_committee %}
+                            <th>Name</th>
+                        {% endif %}
+                        {% if day %}
+                            <th>Status (Day {{ day.number }})</th>
+                        {% endif %}
+                        {% if is_member %}
+                            <th>Actions</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for member in team.members.all|dictsort:'name'  %}
+                        <tr>
+                            <td>{{ member.name }}</td>
+                            {% if is_member or is_committee %}
+                                <td>{{ member.user.get_full_name }}</td>
+                            {% endif %}
+                            {% if day %}
+                                <td>
+                                    {% if not member.current_kill_code %}
+                                        -
+                                    {% elif member.current_kill_code.is_killed %}
+                                        Dead
+                                    {% else %}
+                                        Alive
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            {% if is_member %}
+                                <td class="py-1">
+                                    {% if is_edit_allowed %}
+                                        {% bootstrap_button button_type='link' href=member.get_participant_update_url content='Change member' extra_classes='mb-1 mb-md-0' %}
+                                        {% bootstrap_button button_type='link' href=member.get_participant_delete_url button_class='btn-danger' content='Remove member' %}
+                                    {% else %}
+                                        <a class="btn btn-primary disabled mb-1 mb-md-0" href="#" aria-disabled="true">Change member</a>
+                                        <a class="btn btn-danger disabled" href="#" aria-disabled="true">Remove member</a>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="fst-italic">No members available.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    {% if is_member %}
+        <section class="my-4">
+            <h4>{{ 'Invite members'|colour_first_letter }}</h4>
+            {% if is_edit_allowed %}
+                {% bootstrap_button id="team-join-link" button_type='link' href=team.join_url target="join" content='Copy join link' %}
+            {% else %}
+                <a id="team-join-link" class="btn btn-primary disabled" href="#" aria-disabled="true">Copy join link</a>
+            {% endif %}
+        </section>
+
+        <section class="my-4">
+            <h4>{{ 'Disband Team'|colour_first_letter }}</h4>
+            <p>By disbanding the team, all members lose access, and they will no longer play in this edition of Pandora.</p>
+
+            {% if is_edit_allowed %}
+                {% bootstrap_button button_type='link' href=team.get_participant_delete_url button_class='btn-danger' content='Disband team' %}
+            {% else %}
+                <a class="btn btn-danger disabled" href="#" aria-disabled="true">Disband team</a>
+            {% endif %}
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block toast_body %}
+    Copied join link to clipboard.
+{% endblock %}
+
+{% block scripts %}
+<script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        const elementLink = document.getElementById('team-join-link');
+        elementLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            navigator.clipboard.writeText(elementLink.href);
+            window.toast.show();
+        });
+    })
+</script>
+{% endblock %}

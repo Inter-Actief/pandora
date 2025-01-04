@@ -1,0 +1,21 @@
+{% extends 'page/simple_wide.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Enter Puzzle Code{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Enter Puzzle Code'|colour_first_letter }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% bootstrap_form form label_class='fw-bold' %}
+
+        {% bootstrap_button button_type='submit' content='Enter puzzle code' %}
+
+        {% url 'dashboard' year=edition.year as dashboard_url %}
+        {% bootstrap_button button_type='link' button_class='btn-secondary' href=dashboard_url content='Go to dashboard' %}
+    </form>
+{% endblock %}

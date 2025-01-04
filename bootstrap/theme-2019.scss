@@ -1,0 +1,63 @@
+// Fix table color (unreleased commit https://github.com/thomaspark/bootswatch/commit/333001ba080b7e83254c2b1f3f619703d18358f8)
+$white: #fff !default;
+$table-color: $white !default;
+
+// TODO: consider if the old behaviour is more desirable
+// $table-bg: transparent !default;
+
+$black:    #000 !default;
+$red: #e40000;
+$danger-red: #e74c3c;
+
+$primary: $red;
+$danger: $danger-red;
+
+$link-color: $primary;
+
+$card-color: $black;
+$card-bg: $white;
+
+$navbar-dark-brand-color: $white;
+$navbar-dark-brand-hover-color: $white;
+$navbar-dark-color: $white;
+$navbar-dark-active-color: $black;
+$navbar-dark-hover-color: $black;
+
+$pagination-bg: $primary;
+$pagination-hover-bg: $primary;
+$pagination-disabled-bg: darken($primary, 10%);
+
+$font-size-base: 1rem;
+
+@import 'bootswatch/dist/darkly/variables';
+@import 'bootstrap/scss/bootstrap';
+@import 'bootswatch/dist/darkly/bootswatch';
+
+.navbar-brand {
+  font-family: $headings-font-family;
+  font-weight: bold;
+}
+
+.navbar .nav-item {
+  font-weight: bold;
+}
+
+.first-letter {
+  color: $primary;
+}
+
+.navbar[data-bs-theme="dark"].bg-dark {
+  background-color: $primary !important;
+}
+
+.card .nav-pills .nav-link {
+  color: $black;
+
+  &:hover {
+    color: $primary;
+  }
+
+  &.active {
+    color: $white;
+  }
+}

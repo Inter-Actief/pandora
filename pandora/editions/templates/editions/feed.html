@@ -1,0 +1,13 @@
+{% extends 'editions/scores.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Feed{% endblock %}
+{% block page_title %}{{ 'Feed'|colour_first_letter }}{% endblock %}
+
+{% block scores %}
+    <div class="col d-flex mb-4">
+        {% include 'dashboards/cards/feed.html' %}
+    </div>
+{% endblock %}

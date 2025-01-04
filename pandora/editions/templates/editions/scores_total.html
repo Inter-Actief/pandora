@@ -1,0 +1,86 @@
+{% extends 'editions/scores.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Scores{% endblock %}
+{% block page_title %}{{ 'Scores'|colour_first_letter }}{% endblock %}
+
+{% block scores %}
+    <div class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                {% if not edition %}
+                    <p class="fst-italic">No scores available.</p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Team</th>
+                                    {% if not edition.is_archive_scores %}
+                                        <th>Puzzles</th>
+                                        <th>Puzzle bonus</th>
+                                        <th>Bonus puzzles</th>
+                                        <th>Hints</th>
+                                        <th>Kills</th>
+                                        <th>Bonus</th>
+                                        <th>Offences</th>
+                                    {% else %}
+                                        {% if edition.has_day_archive_scores %}
+                                            {% for day in edition.ordered_days %}
+                                               <th>Day {{ day.number }}</th>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% if edition.has_modification_archive_scores %}
+                                            <th>Bonus</th>
+                                            <th>Offences</th>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if edition.has_other_archive_scores %}
+                                        <th>Other</th>
+                                    {% endif %}
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for total_score, teams in ranked_teams %}
+                                    {% for team in teams %}
+                                        <tr>
+                                            <th>{{ forloop.parentloop.counter }}</th>
+                                            <td>{{ team.name }}</td>
+                                            {% if not edition.is_archive_scores %}
+                                                <td>{{ team.total_puzzle_score }}</td>
+                                                <td>{{ team.total_puzzle_bonus_score }}</td>
+                                                <td>{{ team.total_bonus_puzzle_score }}</td>
+                                                <td>{{ team.total_hint_score }}</td>
+                                                <td>{{ team.total_kill_score }}</td>
+                                                <td>{{ team.total_bonus_score }}</td>
+                                                <td>{{ team.total_offence_score }}</td>
+                                            {% else %}
+                                                {% if edition.has_day_archive_scores %}
+                                                    {% for day in edition.ordered_days %}
+                                                        <td>{% call team 'get_score' day %}</td>
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {% if edition.has_modification_archive_scores %}
+                                                    <td>{{ team.total_bonus_score }}</td>
+                                                    <td>{{ team.total_offence_score }}</td>
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if edition.has_other_archive_scores %}
+                                                <td>{{ team.total_other_archive_score }}</td>
+                                            {% endif %}
+                                            <th>{{ total_score }}</th>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

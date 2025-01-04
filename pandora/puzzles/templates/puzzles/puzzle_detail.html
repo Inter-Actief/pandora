@@ -1,0 +1,153 @@
+{% extends 'editions/edition_detail.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}{{ edition.year }} - Puzzle{% endblock %}
+
+{% block sections %}
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Puzzle'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ puzzle.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Code</th>
+                                <td>
+                                    {% if puzzle.code %}
+                                        {% if puzzle.code.day %}
+                                            Day {{ puzzle.code.day.number }} - Puzzle {{ puzzle.code.number }}
+                                        {% else %}
+                                            Bonus - Puzzle {{ puzzle.code.number }}
+                                        {% endif %}
+                                    {% elif puzzle.pregame_code %}
+                                        Pregame - Puzzle {{ puzzle.pregame_code.number }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="puzzle-solution d-none">
+                                <th>Solution</th>
+                                <td>
+                                    {% if puzzle.solution %}
+                                        {{ puzzle.solution }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="puzzle-solution d-none">
+                                <th>Solution direction</th>
+                                <td>{{ puzzle.get_solution_direction_display }}</td>
+                            </tr>
+                            <tr class="puzzle-solution d-none">
+                                <th>Solution distance</th>
+                                <td>
+                                    {% if puzzle.solution_distance %}
+                                        {{ puzzle.solution_distance }} m
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="puzzle-solution d-none">
+                                <th>Solution description</th>
+                                <td>
+                                    {% if puzzle.solution_description %}
+                                        {{ puzzle.solution_description }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {% bootstrap_button button_type='button' content='Show solution' id='puzzle-solution-button' %}
+                {% bootstrap_button button_type='link' href=puzzle.get_update_url content='Change puzzle' %}
+                {% bootstrap_button button_type='link' button_class='btn-danger' href=puzzle.get_delete_url content='Delete puzzle' %}
+            </div>
+        </div>
+    </section>
+
+    <section class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h3>{{ 'Puzzle Files'|colour_first_letter }}</h3>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                {% if puzzle.files.exists %}
+                                    <th></th>
+                                {% endif %}
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>File name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for file in puzzle.files.all %}
+                                <th>{{ forloop.counter }}</th>
+                                <td>{{ file.get_type_display }}</td>
+                                <td>{{ file.name }}</td>
+                                <td>{{ file.file_name }}</td>
+                                <td class="py-1">
+                                    {% bootstrap_button button_type='link' href=file.get_download_url content='Download' target='puzzle-file' %}
+                                    {% bootstrap_button button_type='link' href=file.get_update_url content='Edit' %}
+                                    {% bootstrap_button button_type='link' button_class='btn-danger' href=file.get_delete_url content='Delete' %}
+                                </td>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="fst-italic">No puzzle files available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% bootstrap_button button_type='link' href=puzzle.get_file_create_url content='Create puzzle file' %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('puzzle-solution-button');
+
+            let isHidden = true;
+
+            const update = () => {
+                const elements = document.getElementsByClassName('puzzle-solution');
+                for (const element of elements) {
+                    if (isHidden) {
+                        element.classList.add('d-none');
+                    } else {
+                        element.classList.remove('d-none');
+                    }
+                }
+
+                button.textContent = isHidden ? 'Show solution' : 'Hide solution';
+            };
+
+            button.addEventListener('click', () => {
+                isHidden = !isHidden;
+
+                update();
+            });
+        });
+    </script>
+{% endblock %}

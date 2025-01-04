@@ -1,0 +1,64 @@
+{% extends 'editions/scores.html' %}
+
+{% load django_bootstrap5 %}
+{% load util %}
+
+{% block title %}Scores{% endblock %}
+{% block page_title %}{{ 'Scores'|colour_first_letter }}{% endblock %}
+
+{% block scores %}
+    <div class="col d-flex mb-4">
+        <div class="card flex-fill">
+            <div class="card-body">
+                {% if not edition %}
+                    <p class="fst-italic">No scores available.</p>
+                {% else %}
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Team</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Reason</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for total_modification_score, teams in ranked_teams %}
+                                    {% for team in teams %}
+                                        <tr>
+                                            <th rowspan="{{ team.score_modifications.count|maximum:1 }}">{{ forloop.parentloop.counter }}</th>
+                                            <td rowspan="{{ team.score_modifications.count|maximum:1 }}">{{ team.name }}</td>
+
+                                            {% if team.score_modifications.exists %}
+                                                <td>{{ team.score_modifications.first.get_type_display }}</td>
+                                                <td>{{ team.score_modifications.first.amount }}</td>
+                                                <td>{{ team.score_modifications.first.reason }}</td>
+                                            {% else %}
+                                                <td colspan="3"></td>
+                                            {% endif %}
+
+                                            <th rowspan="{{ team.score_modifications.count|maximum:1 }}">{{ total_modification_score }}</th>
+                                        </tr>
+
+                                        {% for score_modification in team.score_modifications.all %}
+                                            {% if not forloop.first %}
+                                                <tr>
+                                                    <td>{{ score_modification.get_type_display }}</td>
+                                                    <td>{{ score_modification.amount }}</td>
+                                                    <td>{{ score_modification.reason }}</td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

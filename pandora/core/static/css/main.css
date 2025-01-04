@@ -1,0 +1,13 @@
+main {
+    padding-top: 6rem;
+}
+
+.page-title {
+    overflow-wrap: break-word;
+}
+
+@media(min-width: 768px) {
+    .page-title {
+        font-size: 5rem;
+    }
+}

@@ -1,0 +1,124 @@
+{% load django_bootstrap5 %}
+{% load static %}
+{% load util %}
+
+{% call edition 'get_is_committee_member' user as is_committee %}
+
+<div class="card flex-fill">
+    <div class="card-body">
+        <h4 class="d-flex justify-content-between">
+            <span>
+                {{ 'Feed'|colour_first_letter }}
+            </span>
+
+            <span>
+                {% if feed_url %}
+                    {% bootstrap_button button_type='link' href=feed_url content='Enlarge' %}
+                {% endif %}
+                {% bootstrap_button button_type='link' content='Enable sound' id='feed-sound-button' %}
+            </span>
+        </h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Message</th>
+                        {% if is_committee %}
+                            <th>URL</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody id="feed-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        const audio = new Audio('{% static 'audio/notification.mp3' %}');
+        let isSoundEnabled = false;
+
+        const elementTableBody = document.getElementById('feed-table-body');
+
+        const addMessage = ({timestamp, message, url}) => {
+            const elementRow = document.createElement('tr');
+
+            const elementColumnTime = document.createElement('th');
+            elementColumnTime.textContent = luxon.DateTime.fromISO(timestamp).toFormat('d MMMM HH:mm');
+            elementRow.appendChild(elementColumnTime);
+
+            const elementColumnMessage = document.createElement('td');
+            elementColumnMessage.textContent = message;
+            elementRow.appendChild(elementColumnMessage);
+
+            {% if is_committee %}
+                const elementColumnUrl = document.createElement('td');
+                if (url && url.length > 0) {
+                    const elementUrl = document.createElement('a');
+                    elementUrl.href = url;
+                    elementUrl.target = 'feed';
+                    elementUrl.textContent = 'Link';
+                    elementColumnUrl.appendChild(elementUrl);
+                } else {
+                    elementColumnUrl.textContent = '-';
+                }
+                elementRow.appendChild(elementColumnUrl);
+            {% endif %}
+
+            elementTableBody.prepend(elementRow);
+
+            if (elementTableBody.children.length > 10) {
+                elementTableBody.removeChild(elementTableBody.children[10]);
+            }
+
+            if (isSoundEnabled) {
+                audio.play();
+            }
+        };
+
+        // Initialize WebSocket
+        const webSocket = new ReconnectingWebSocket('{{ feed_websocket_url }}');
+
+        const onMessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                addMessage(data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        // Add WebSocket event listeners
+        webSocket.addEventListener('open', () => {
+            addMessage({
+                timestamp: luxon.DateTime.now().toISO(),
+                message: 'Connected to feed.'
+            });
+        });
+
+        webSocket.addEventListener('message', onMessage);
+
+        webSocket.addEventListener('close', () => {
+            addMessage({
+                timestamp: luxon.DateTime.now().toISO(),
+                message: 'Disconnected from feed.'
+            });
+        });
+
+        const elementSoundButton = document.getElementById('feed-sound-button');
+        elementSoundButton.addEventListener('click', () => {
+            isSoundEnabled = !isSoundEnabled;
+
+            if (isSoundEnabled) {
+                elementSoundButton.textContent = 'Disable sound';
+                audio.play();
+            } else {
+                elementSoundButton.textContent = 'Enable sound';
+            }
+        });
+    });
+</script>

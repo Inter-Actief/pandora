@@ -1,0 +1,13 @@
+{% extends 'page/../page/simple_wide.html' %}
+
+{# Overrides https://github.com/pennersr/django-allauth/blob/master/allauth/templates/account/authentication_error.html #}
+
+{% load util %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block card_content %}
+    <h3>{{ 'Sign In'|colour_first_letter }}</h3>
+
+    <p>An error occurred while attempting to login via your social network account.</p>
+{% endblock %}
