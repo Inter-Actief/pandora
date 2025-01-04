@@ -3,12 +3,12 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      internval: "weekly"
+      interval: "weekly"
 
   - package-ecosystem: "poetry"
     directory: "/"
     schedule:
-      internval: "weekly"
+      interval: "weekly"
     
   - package-ecosystem: "npm"
     directory: "/bootstrap"
