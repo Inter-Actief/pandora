@@ -28,7 +28,7 @@
         "compile-2024": "sass -I node_modules theme-2024.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2024 && rm bootstrap.css bootstrap.css.map"
     },
     "dependencies": {
-        "bootstrap": "^5.3.2",
+        "bootstrap": "^5.3.3",
         "bootswatch": "^5.3.2"
     },
     "devDependencies": {
