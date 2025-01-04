@@ -1,6 +1,9 @@
 version: 2
 updates:
   - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      internval: "weekly"
 
   - package-ecosystem: "poetry"
     directory: "/"
