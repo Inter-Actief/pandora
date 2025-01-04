@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+
+  - package-ecosystem: "poetry"
+    directory: "/"
+    schedule:
+      internval: "weekly"
+    
+  - package-ecosystem: "npm"
+    directory: "/bootstrap"
+    schedule:
+      interval: "weekly"
