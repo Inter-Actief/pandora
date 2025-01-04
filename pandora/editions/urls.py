@@ -21,7 +21,6 @@ urlpatterns = [
 
     path('gameplay', views.gameplay, name='gameplay'),
     path('rules', views.rules, name='rules'),
-    path('radio', views.radio, name='radio'),
 
     path('archive/upload', ArchiveUploadView.as_view(), name='archive_upload'),
 

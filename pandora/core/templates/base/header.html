@@ -76,14 +76,6 @@
                         <li class="nav-item">
                             <a class="nav-link {% active 'committee' year=edition.year %}" href="{% url 'committee' year=edition.year %}">Committee</a>
                         </li>
-                        {% if edition == latest_edition %}
-                            <li class="nav-item">
-                                <a class="nav-link {% active 'radio' %}" href="{% url 'radio' %}">Pando Radio</a>
-                            </li>
-{#                            <li class="nav-item">#}
-{#                                <a class="nav-link" href="https://tv.iapandora.nl" target="tv">TV</a>#}
-{#                            </li>#}
-                        {% endif %}
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav ms-auto">
