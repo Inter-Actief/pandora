@@ -29,6 +29,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.10"
 asgiref = "^3.8.1"
+beautifulsoup4 = "^4.12.3"
 channels = "^4.1.0"
 channels-redis = "^4.2.0"
 croniter = "^2.0.5"
@@ -47,8 +48,8 @@ pillow = "^11.1.0"
 python-dotenv = "^1.0.1"
 pytz = "^2024.1"
 sentry-sdk = "^2.1.1"
-uvicorn = {extras = ["standard"], version = "^0.29.0"}
-beautifulsoup4 = "^4.12.3"
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+uvicorn-worker = "^0.3.0"
 
 [tool.poetry.group.dev.dependencies]
 daphne = "^4.0.0"

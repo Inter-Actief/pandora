@@ -16,4 +16,4 @@ poetry run python manage.py createcachetable
 poetry run python manage.py migrate
 
 # Start Gunicorn/Uvicorn application
-poetry run gunicorn application.asgi:application --bind 0.0.0.0:3000 --forwarded-allow-ips '*' --workers 4 --worker-class uvicorn.workers.UvicornWorker --access-logfile '-'
+poetry run gunicorn application.asgi:application --bind 0.0.0.0:3000 --forwarded-allow-ips '*' --workers 4 --worker-class uvicorn_worker.UvicornWorker --access-logfile '-'
