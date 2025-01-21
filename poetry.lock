@@ -541,23 +541,24 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-allauth"
-version = "0.62.1"
+version = "65.3.1"
 description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "django-allauth-0.62.1.tar.gz", hash = "sha256:6f33e86e42fb78ec2885ee905f337b87c46465ae7fe162c4959dcac81d47e2ad"},
+    {file = "django_allauth-65.3.1.tar.gz", hash = "sha256:e02e951b71a2753a746459f2efa114c7c72bf2cef6887dbe8607a577c0350587"},
 ]
 
 [package.dependencies]
-Django = ">=3.2"
+asgiref = ">=3.8.1"
+Django = ">=4.2.16"
 pyjwt = {version = ">=1.7", extras = ["crypto"], optional = true, markers = "extra == \"socialaccount\""}
 python3-openid = {version = ">=3.0.8", optional = true, markers = "extra == \"openid\""}
 requests = {version = ">=2.0.0", optional = true, markers = "extra == \"socialaccount\""}
 requests-oauthlib = {version = ">=0.3.0", optional = true, markers = "extra == \"socialaccount\""}
 
 [package.extras]
-mfa = ["qrcode (>=7.0.0)"]
+mfa = ["fido2 (>=1.1.2)", "qrcode (>=7.0.0)"]
 openid = ["python3-openid (>=3.0.8)"]
 saml = ["python3-saml (>=1.15.0,<2.0.0)"]
 socialaccount = ["pyjwt[crypto] (>=1.7)", "requests (>=2.0.0)", "requests-oauthlib (>=0.3.0)"]
@@ -2087,4 +2088,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "2c10e9586708d28feddc9786f34567d952aedec607a1fcd40e39048387ba2be3"
+content-hash = "aa7b837249e79f060a5543cd96b6edbfc1030144f591d8b9ed1b1d5aa791ff89"
