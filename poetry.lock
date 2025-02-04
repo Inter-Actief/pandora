@@ -655,13 +655,13 @@ Django = ">=4.2"
 
 [[package]]
 name = "django-import-export"
-version = "4.3.4"
+version = "4.3.5"
 description = "Django application and library for importing and exporting data with included admin integration."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "django_import_export-4.3.4-py3-none-any.whl", hash = "sha256:9b56e847ddcb22c0bfbb508bc3668f8b33f95d888002e931c4039d0466270230"},
-    {file = "django_import_export-4.3.4.tar.gz", hash = "sha256:9ba43ced4fefae614ee7e30da8fdb55d6fcf0450489e7d290299672e0830a436"},
+    {file = "django_import_export-4.3.5-py3-none-any.whl", hash = "sha256:143611d9d3c8b000c54e33db122c8d283eef38167acd7a854d15b9ad77c328e7"},
+    {file = "django_import_export-4.3.5.tar.gz", hash = "sha256:61e078cea307a6199a7e905840640e55db3521d7c81be224fd8b6576ce9bd0fc"},
 ]
 
 [package.dependencies]
@@ -2087,4 +2087,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4960aa7510cb4fbe272f9bf2d52f23e93c54e02847c9daf1600dbb29ef1ef148"
+content-hash = "824f22dc03ab42da15e42afbd6a432ca12c2372c07a9e4f59b90ccb6fcebb9e4"
