@@ -36,7 +36,7 @@ croniter = "^2.0.5"
 django = "^5.1.7"
 django-allauth = {extras = ["openid", "socialaccount"], version = "^0.62.1"}
 django-allow-cidr = "^0.7.1"
-django-bootstrap5 = "^24.2"
+django-bootstrap5 = "^25.1"
 django-cors-headers = "^4.7.0"
 django-filter = "^25.1"
 django-import-export = "^4.3.7"

@@ -612,21 +612,21 @@ packaging = "*"
 
 [[package]]
 name = "django-bootstrap5"
-version = "24.3"
+version = "25.1"
 description = "Bootstrap 5 for Django"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "django_bootstrap5-24.3-py3-none-any.whl", hash = "sha256:98f7916f9f7f9c34dfe157f7c062a28ebf6d17ff95307bef260ba794ba34e2a0"},
-    {file = "django_bootstrap5-24.3.tar.gz", hash = "sha256:ca5ec5568fc2a3fc239f0cb8ce41a7df3802b8c4af930d7f64451784ec7ddc16"},
+    {file = "django_bootstrap5-25.1-py3-none-any.whl", hash = "sha256:964ad2d970d0495b030b86f31b33033dfdfe839a67b32ea599fa02eb39988ae7"},
+    {file = "django_bootstrap5-25.1.tar.gz", hash = "sha256:e81c77eb710356f94e426a51f4f469890d5720f5e7e53d650f4405d4cc94da04"},
 ]
 
 [package.dependencies]
-Django = ">=4.2"
+django = ">=4.2"
 
 [package.extras]
-jinja = ["Jinja2 (>=3.0,<4)"]
+jinja = ["jinja2 (>=3.0,<4)"]
 
 [[package]]
 name = "django-cors-headers"
@@ -2184,4 +2184,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "b6fe6b2a792d5a945157b4ac8ec2c1389266085e6c55acb1f63106705aac30e9"
+content-hash = "400fccb44410568ff35a78b3a012a881190026546b619943abb0930ecccebe94"
