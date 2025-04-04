@@ -25,7 +25,8 @@
         "compile-2021": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2021.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2021 && rm bootstrap.css bootstrap.css.map",
         "compile-2022": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2022.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2022 && rm bootstrap.css bootstrap.css.map",
         "compile-2023": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2023.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2023 && rm bootstrap.css bootstrap.css.map",
-        "compile-2024": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2024.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2024 && rm bootstrap.css bootstrap.css.map"
+        "compile-2024": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2024.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2024 && rm bootstrap.css bootstrap.css.map",
+        "compile-2025": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2025.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2025 && rm bootstrap.css bootstrap.css.map"
     },
     "dependencies": {
         "bootstrap": "^5.3.3",
