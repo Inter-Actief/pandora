@@ -433,14 +433,14 @@ files = [
 
 [[package]]
 name = "croniter"
-version = "2.0.7"
+version = "6.0.0"
 description = "croniter provides iteration for datetime object with cron like format"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.6"
 groups = ["main"]
 files = [
-    {file = "croniter-2.0.7-py2.py3-none-any.whl", hash = "sha256:f15e80828d23920c4bb7f4d9340b932c9dcabecafc7775703c8b36d1253ed526"},
-    {file = "croniter-2.0.7.tar.gz", hash = "sha256:1041b912b4b1e03751a0993531becf77851ae6e8b334c9c76ffeffb8f055f53f"},
+    {file = "croniter-6.0.0-py2.py3-none-any.whl", hash = "sha256:2f878c3856f17896979b2a4379ba1f09c83e374931ea15cc835c5dd2eee9b368"},
+    {file = "croniter-6.0.0.tar.gz", hash = "sha256:37c504b313956114a983ece2c2b07790b1f1094fe9d81cc94739214748255577"},
 ]
 
 [package.dependencies]
@@ -2185,4 +2185,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "7ed7c476cbce8fb38ea94eb8197312fabdac44182679e588d5e15eabe5b9266f"
+content-hash = "88f92924efa2b923056a5116c31c976b652b853538aedf8a359df97d74b62e05"
