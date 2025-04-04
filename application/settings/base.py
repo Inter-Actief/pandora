@@ -243,12 +243,11 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard', kwargs={'year': 2024})
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_USER_DISPLAY = 'application.settings.base.get_user_display_name'
-ACCOUNT_USERNAME_REQUIRED = False
 
 ACCOUNT_FORMS = {
     'login': 'pandora.core.forms.LoginForm',
