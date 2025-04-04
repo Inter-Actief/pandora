@@ -32,7 +32,7 @@ asgiref = "^3.8.1"
 beautifulsoup4 = "^4.13.3"
 channels = "^4.2.2"
 channels-redis = "^4.2.0"
-croniter = "^2.0.5"
+croniter = "^6.0.0"
 django = "^5.1.8"
 django-allauth = {extras = ["openid", "socialaccount"], version = "^65.5.0"}
 django-allow-cidr = "^0.7.1"
