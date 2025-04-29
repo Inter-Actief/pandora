@@ -1,8 +1,22 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.urls import reverse
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 
 from pandora.editions.mixins import CommitteeMemberAccessMixin, EditionMixin
+from pandora.editions.models import Edition
+
+
+class DashboardRedirectView(LoginRequiredMixin, RedirectView):
+    permanent = False
+    query_string = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        edition = Edition.get_latest()
+        if not edition:
+           return reverse('edition_create')
+
+        return edition.get_dashboard_url()
 
 
 class DashboardView(EditionMixin, LoginRequiredMixin, TemplateView):

@@ -222,6 +222,9 @@ class Edition(BaseModel):
     # def get_absolute_url(self):
     #     return reverse('edition', kwargs={'pk': self.id})
 
+    def get_dashboard_url(self):
+        return reverse('dashboard', kwargs={'year': self.year})
+
     def get_participant_scores_url(self):
         if hasattr(self, 'pregame') and self.pregame and self.pregame.is_active:
             return reverse('pregame_scores', kwargs={'year': self.year})

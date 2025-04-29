@@ -3,7 +3,7 @@ from django.urls import path
 from .views import static as views
 from .views.archive import ArchiveUploadView
 from .views.committee_member import CommitteeMemberListView
-from .views.dashboard import DashboardView, CommitteeDashboardView, CommitteeFeedDashboardView
+from .views.dashboard import DashboardRedirectView, DashboardView, CommitteeDashboardView, CommitteeFeedDashboardView
 from .views.edition import EditionCreateView, ParticipantEditionDetailView
 from .views.edition_media_item import EditionMediaItemListView
 from .views.edition_setting import EditionSettingListView, EditionSettingUpdateView
@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('editions/add', EditionCreateView.as_view(), name='edition_create'),
 
+    path('dashboard', DashboardRedirectView.as_view(), name='dashboard_redirect'),
     path('<int:year>/dashboard', DashboardView.as_view(), name='dashboard'),
     path('<int:year>/committee/dashboard', CommitteeDashboardView.as_view(), name='committee_dashboard'),
     path('<int:year>/committee/feed/dashboard', CommitteeFeedDashboardView.as_view(), name='committee_feed_dashboard'),

@@ -239,8 +239,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
 
-# TODO: remove hardcoded year
-LOGIN_REDIRECT_URL = reverse_lazy('dashboard', kwargs={'year': 2025})
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard_redirect')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 ACCOUNT_LOGIN_METHODS = {'email'}
