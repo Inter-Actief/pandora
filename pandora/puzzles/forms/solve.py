@@ -89,6 +89,26 @@ class SolveCreateForm(ModelForm):
             }
         })
 
+        bonus_after = self.edition.get_setting('puzzles.bonus.after').as_int()
+
+        if day and instance.code.number <= bonus_after and instance.team.solves.filter(code__day=day, code__number__lte=bonus_after).count() == bonus_after:
+            bonus = instance.team.get_puzzle_bonus_score(day)
+
+            # Add message
+            messages.success(self.request, f'Your team earned a puzzle bonus of {bonus} points.')
+
+            # Send message to feed channels
+            async_to_sync(get_channel_layer().group_send)(self.edition.get_feed_channel_group(), {
+                'type': 'puzzle_bonus',
+                'timestamp': instance.created_at.isoformat(),
+                'message': f'{instance.team.name} earned a puzzle bonus of {bonus} points.',
+                'team': {
+                    'id': str(instance.team.id),
+                    'name': instance.team.name
+                },
+                'bonus': bonus
+            })
+
         if day and instance.team.solves.filter(code__day=day).count() == day.puzzle_codes.count():
             # Send message to feed channels
             async_to_sync(get_channel_layer().group_send)(self.edition.get_feed_channel_group(), {
