@@ -34,6 +34,9 @@ class EditionFeedConsumer(JsonWebsocketConsumer):
     def solve(self, message):
         self.send_message(message)
 
+    def puzzle_bonus(self, message):
+        self.send_message(message)
+
     def completion(self, message):
         self.send_message(message)
 

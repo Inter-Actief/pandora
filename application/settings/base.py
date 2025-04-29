@@ -240,7 +240,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # TODO: remove hardcoded year
-LOGIN_REDIRECT_URL = reverse_lazy('dashboard', kwargs={'year': 2024})
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard', kwargs={'year': 2025})
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
 ACCOUNT_LOGIN_METHODS = {'email'}
