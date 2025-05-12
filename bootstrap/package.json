@@ -30,7 +30,7 @@
     },
     "dependencies": {
         "bootstrap": "^5.3.6",
-        "bootswatch": "^5.3.5"
+        "bootswatch": "^5.3.6"
     },
     "devDependencies": {
         "sass": "^1.87.0"
