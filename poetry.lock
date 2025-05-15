@@ -721,14 +721,14 @@ yaml = ["tablib[yaml]"]
 
 [[package]]
 name = "django-qr-code"
-version = "4.1.0"
+version = "4.2.0"
 description = "An application that provides tools for displaying QR codes on your Django site."
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "django_qr_code-4.1.0-py3-none-any.whl", hash = "sha256:000ae66411a13ce9b21c2631177b3f457614528c8866ebff3f7e991f4b6082b7"},
-    {file = "django_qr_code-4.1.0.tar.gz", hash = "sha256:0d236a2385385cb8570a7191597120be6abfc5ca2ad49aabe2b182ddb28c12b0"},
+    {file = "django_qr_code-4.2.0-py3-none-any.whl", hash = "sha256:d2acc6bcc400c609f4e3fdf4d5198231bd8bfee9f66d674a5ed24f6fa50aa0fe"},
+    {file = "django_qr_code-4.2.0.tar.gz", hash = "sha256:902d463fa2de95e4fcbe7d5c99b1d0f0cd5e2617a1d599a51395b59f61d36c21"},
 ]
 
 [package.dependencies]
@@ -2196,4 +2196,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "c7c51a465513385079861d035830dea74cbf4ac984776ba22b7e31a3297ce6d1"
+content-hash = "2a4ac329dc7fcb871fcf37b3edefeb11d8b223851219735b51869dd3d5eb3118"
