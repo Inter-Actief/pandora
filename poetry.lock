@@ -571,29 +571,29 @@ bcrypt = ["bcrypt"]
 
 [[package]]
 name = "django-allauth"
-version = "65.8.0"
+version = "65.8.1"
 description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
 optional = false
 python-versions = ">=3.8"
 groups = ["main"]
 files = [
-    {file = "django_allauth-65.8.0.tar.gz", hash = "sha256:9da589d99d412740629333a01865a90c95c97e0fae0cde789aa45a8fda90e83b"},
+    {file = "django_allauth-65.8.1.tar.gz", hash = "sha256:38f54708eb06e542af33beeb553e0abb0d7524fded43a5e42c078f20d8e9fc18"},
 ]
 
 [package.dependencies]
 asgiref = ">=3.8.1"
 Django = ">=4.2.16"
-pyjwt = {version = ">=1.7", extras = ["crypto"], optional = true, markers = "extra == \"socialaccount\""}
-python3-openid = {version = ">=3.0.8", optional = true, markers = "extra == \"openid\""}
-requests = {version = ">=2.0.0", optional = true, markers = "extra == \"socialaccount\""}
+pyjwt = {version = ">=2.0,<3", extras = ["crypto"], optional = true, markers = "extra == \"socialaccount\""}
+python3-openid = {version = ">=3.0.8,<4", optional = true, markers = "extra == \"openid\""}
+requests = {version = ">=2.0.0,<3", optional = true, markers = "extra == \"socialaccount\""}
 requests-oauthlib = {version = ">=0.3.0", optional = true, markers = "extra == \"socialaccount\""}
 
 [package.extras]
-mfa = ["fido2 (>=1.1.2)", "qrcode (>=7.0.0)"]
-openid = ["python3-openid (>=3.0.8)"]
+mfa = ["fido2 (>=1.1.2,<3)", "qrcode (>=7.0.0,<9)"]
+openid = ["python3-openid (>=3.0.8,<4)"]
 saml = ["python3-saml (>=1.15.0,<2.0.0)"]
-socialaccount = ["pyjwt[crypto] (>=1.7)", "requests (>=2.0.0)", "requests-oauthlib (>=0.3.0)"]
-steam = ["python3-openid (>=3.0.8)"]
+socialaccount = ["pyjwt[crypto] (>=2.0,<3)", "requests (>=2.0.0,<3)", "requests-oauthlib (>=0.3.0)"]
+steam = ["python3-openid (>=3.0.8,<4)"]
 
 [[package]]
 name = "django-allow-cidr"
@@ -2196,4 +2196,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "5fbe4daebdb8a876d6c22e9c7e95086ebd014e2bf27b6330f95a66223c9e0866"
+content-hash = "b3395c06aadbbbe550157e227090ff88b200545c26bc2533f156482c8afecf77"
