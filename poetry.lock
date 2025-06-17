@@ -598,19 +598,18 @@ steam = ["python3-openid (>=3.0.8,<4)"]
 
 [[package]]
 name = "django-allow-cidr"
-version = "0.7.1"
+version = "0.8.0"
 description = "A Django Middleware to enable use of CIDR IP ranges in ALLOWED_HOSTS."
 optional = false
 python-versions = "*"
 groups = ["main"]
 files = [
-    {file = "django-allow-cidr-0.7.1.tar.gz", hash = "sha256:382c5d7a9807279e3e96e4f4892b59163a2b30128c596902bf5f80e133e1ccbb"},
-    {file = "django_allow_cidr-0.7.1-py2.py3-none-any.whl", hash = "sha256:11126c5bb9df3a61ff9d97304856ba7e5b26d46c6d456709a6d9e28483bff47f"},
+    {file = "django_allow_cidr-0.8.0-py2.py3-none-any.whl", hash = "sha256:724ce76b7b4a25c641ddcd33777e2e95da622dd2c11937f0d76d0cd3d54b1622"},
+    {file = "django_allow_cidr-0.8.0.tar.gz", hash = "sha256:d6f80230621dd5b19ec1665b85abf8218b02556ff7cf0ddda41e2607267a3277"},
 ]
 
 [package.dependencies]
-Django = ">=2.2"
-packaging = "*"
+Django = ">=4.2"
 
 [[package]]
 name = "django-bootstrap5"
@@ -2197,4 +2196,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "03d303e3ecf757d804d6237a7c8911a7f21f649e925558b45569e92690c163e5"
+content-hash = "c3e372144e5e49e3f005831f2cbe247d2c4ac86b3c66a8b0b32bf08710ac04c5"
