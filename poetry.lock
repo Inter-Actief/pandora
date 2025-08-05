@@ -269,19 +269,19 @@ tests = ["async-timeout", "coverage (>=4.5,<5.0)", "pytest", "pytest-asyncio", "
 
 [[package]]
 name = "channels-redis"
-version = "4.2.1"
+version = "4.3.0"
 description = "Redis-backed ASGI channel layer implementation"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "channels_redis-4.2.1-py3-none-any.whl", hash = "sha256:2ca33105b3a04b5a327a9c47dd762b546f30b76a0cd3f3f593a23d91d346b6f4"},
-    {file = "channels_redis-4.2.1.tar.gz", hash = "sha256:8375e81493e684792efe6e6eca60ef3d7782ef76c6664057d2e5c31e80d636dd"},
+    {file = "channels_redis-4.3.0-py3-none-any.whl", hash = "sha256:48f3e902ae2d5fef7080215524f3b4a1d3cea4e304150678f867a1a822c0d9f5"},
+    {file = "channels_redis-4.3.0.tar.gz", hash = "sha256:740ee7b54f0e28cf2264a940a24453d3f00526a96931f911fcb69228ef245dd2"},
 ]
 
 [package.dependencies]
-asgiref = ">=3.2.10,<4"
-channels = "*"
+asgiref = ">=3.9.1,<4"
+channels = ">=4.2.2"
 msgpack = ">=1.0,<2.0"
 redis = ">=4.6"
 
@@ -2202,4 +2202,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "6a13f8aa2f527605e0d621348d66eacf34cb6eaa0a7fdabd8ec1826b0b404669"
+content-hash = "1bfbbf89807fb5cdd32a16feac558613ef8bae0c47b4f9e6319dab9b687e7c4a"
