@@ -29,7 +29,7 @@
         "compile-2025": "sass --silence-deprecation=import --quiet-deps -I node_modules theme-2025.scss bootstrap.css && cp bootstrap.css bootstrap.css.map ../pandora/themes/static/css/themes/2025 && rm bootstrap.css bootstrap.css.map"
     },
     "dependencies": {
-        "bootstrap": "^5.3.7",
+        "bootstrap": "^5.3.8",
         "bootswatch": "^5.3.7"
     },
     "devDependencies": {
