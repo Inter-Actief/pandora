@@ -33,6 +33,6 @@
         "bootswatch": "^5.3.7"
     },
     "devDependencies": {
-        "sass": "^1.91.0"
+        "sass": "^1.92.1"
     }
 }
