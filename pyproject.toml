@@ -37,7 +37,7 @@ django = "^5.2.6"
 django-allauth = {extras = ["openid", "socialaccount"], version = "^65.11.2"}
 django-allow-cidr = "^0.8.0"
 django-bootstrap5 = "^25.2"
-django-cors-headers = "^4.8.0"
+django-cors-headers = "^4.9.0"
 django-filter = "^25.1"
 django-import-export = "^4.3.9"
 django-qr-code = "^4.2.0"
