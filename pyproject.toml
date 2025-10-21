@@ -34,7 +34,7 @@ channels = "^4.3.1"
 channels-redis = "^4.3.0"
 croniter = "^6.0.0"
 django = "^5.2.7"
-django-allauth = {extras = ["openid", "socialaccount"], version = "^65.12.0"}
+django-allauth = {extras = ["openid", "socialaccount"], version = "^65.12.1"}
 django-allow-cidr = "^0.8.0"
 django-bootstrap5 = "^25.2"
 django-cors-headers = "^4.9.0"
