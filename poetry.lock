@@ -697,14 +697,14 @@ drf = ["djangorestframework"]
 
 [[package]]
 name = "django-import-export"
-version = "4.3.10"
+version = "4.3.12"
 description = "Django application and library for importing and exporting data with included admin integration."
 optional = false
 python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "django_import_export-4.3.10-py3-none-any.whl", hash = "sha256:a9ad98c8b88fd266012a8c394fd3b997d528da908056c35d75a6117dbcda0e2f"},
-    {file = "django_import_export-4.3.10.tar.gz", hash = "sha256:bc113050c367b895fdd97f516d904f1120cdefb89fa15ef30dc1144e1a731886"},
+    {file = "django_import_export-4.3.12-py3-none-any.whl", hash = "sha256:78dd7ca363d1816dcb2f4ca47ed118f17cce7e668bd6c216207d9cf8c9b1c079"},
+    {file = "django_import_export-4.3.12.tar.gz", hash = "sha256:708658647b232d16b9a0db0a5cfc07215eacd514fe8c30deb00da50e2e557c23"},
 ]
 
 [package.dependencies]
@@ -2209,4 +2209,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "125856cc8d026b86826cba6d1b95847825a77aa24801b448a0feb921997bdabf"
+content-hash = "397c51c287f0c921c46bb8460774189336766646efe53871bf12bc06ae495f5c"
