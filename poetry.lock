@@ -617,14 +617,14 @@ Django = ">=4.2"
 
 [[package]]
 name = "django-bootstrap5"
-version = "25.3"
+version = "26.1"
 description = "Bootstrap 5 for Django"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "django_bootstrap5-25.3-py3-none-any.whl", hash = "sha256:3d381a5329a1439ac3237456c28cc8170c62b4c56ad3564d57876ffc3d4c5e78"},
-    {file = "django_bootstrap5-25.3.tar.gz", hash = "sha256:cc36f1a19d3200c0f5628c703320edb5c4e39e19bf17607fadf58ddb11828912"},
+    {file = "django_bootstrap5-26.1-py3-none-any.whl", hash = "sha256:c6aa8aa8f6577996985c2b2dd9058984ad3a22cb363f3f185a65fdca40c3ace5"},
+    {file = "django_bootstrap5-26.1.tar.gz", hash = "sha256:cd4565143403e097a553a0418d036113e1e9bba35ca8e7c1830ad78c0f1be849"},
 ]
 
 [package.dependencies]
@@ -2199,4 +2199,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "f853554a0b865aa6ad8893dee75485ceac92b08a212b3e1354dc377a5e882012"
+content-hash = "d69dae8d104f717571c082e611947717c874a31f259617202624067f7b25bf58"
