@@ -788,14 +788,14 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "gunicorn"
-version = "25.0.1"
+version = "25.0.3"
 description = "WSGI HTTP Server for UNIX"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "gunicorn-25.0.1-py3-none-any.whl", hash = "sha256:23cbe968c6ae3c8efc3d118c8353fa0763efc2102d89d0d3cea696cede7ff6b1"},
-    {file = "gunicorn-25.0.1.tar.gz", hash = "sha256:573e053aa950246e307ea908bd7ddce1870d41a40aec0c935938c586f0b9b946"},
+    {file = "gunicorn-25.0.3-py3-none-any.whl", hash = "sha256:aca364c096c81ca11acd4cede0aaeea91ba76ca74e2c0d7f879154db9d890f35"},
+    {file = "gunicorn-25.0.3.tar.gz", hash = "sha256:b53a7fff1a07b825b962af320554de44ae77a26abfa373711ff3f83d57d3506d"},
 ]
 
 [package.dependencies]
@@ -2200,4 +2200,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "2a17a79e6d105c38f8727284db8989c2b4ec58c179b890c08735bed1e50ef906"
+content-hash = "9fde717d049644b782e72af7e52713346cabab0c37428bdc69fc49a2942f83d7"
