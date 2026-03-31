@@ -38,6 +38,18 @@
         {# Stylesheets and scripts from Django forms #}
         {{ form.media }}
 
+        {# Stylesheet for GeoDjango widgets #}
+        <style>
+            .dj_map_wrapper {
+                float: none;
+            }
+
+            .dj_map {
+                width: 600px;
+                height: 400px;
+            }
+        </style>
+
         {# Scripts required for templates #}
         <script src="https://cdn.jsdelivr.net/npm/reconnecting-websocket@4.4.0/dist/reconnecting-websocket-iife.min.js" crossorigin="anonymous" integrity="sha384-ZqkF40ok1JKjqGTaQhnRcpQjz2GfTkvMXBxGyXEhIr2oZ/RdAFc75VA858LTN5G8"></script>
     </head>
