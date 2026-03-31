@@ -79,7 +79,7 @@
                     {% url 'puzzle_create' year=edition.year as puzzle_create_url %}
                     {% bootstrap_button button_type='link' href=puzzle_create_url content='Create puzzle' %}
 
-                    {% bootstrap_button button_type='button' content='Show solutions' id='puzzle-solution-button' %}
+                    {% bootstrap_button button_type='button' content='Show solutions/codes' id='puzzle-solution-button' %}
                 </div>
 
                 <div class="table-responsive">
@@ -91,7 +91,8 @@
                                 <th class="puzzle-solution d-none">Solution</th>
                                 <th class="puzzle-solution d-none">Direction</th>
                                 <th class="puzzle-solution d-none">Distance</th>
-                                <th>Code</th>
+                                <th>Number</th>
+                                <th class="puzzle-solution d-none">Code</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -118,6 +119,15 @@
                                             {% endif %}
                                         {% elif puzzle.pregame_code %}
                                             Pregame - Puzzle {{ puzzle.pregame_code.number }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td class="puzzle-solution d-none font-monospace">
+                                        {% if puzzle.code %}
+                                            {{ puzzle.code.code }}
+                                        {% elif puzzle.pregame_code %}
+                                            {{ puzzle.pregame_code.code }}
                                         {% else %}
                                             -
                                         {% endif %}
@@ -167,7 +177,7 @@
                     }
                 }
 
-                button.textContent = isHidden ? 'Show solutions' : 'Hide solutions';
+                button.textContent = isHidden ? 'Show solutions/codes' : 'Hide solutions/codes';
             };
 
             button.addEventListener('click', () => {

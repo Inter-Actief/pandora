@@ -19,7 +19,7 @@
                                 <td>{{ puzzle.name }}</td>
                             </tr>
                             <tr>
-                                <th>Code</th>
+                                <th>Number</th>
                                 <td>
                                     {% if puzzle.code %}
                                         {% if puzzle.code.day %}
@@ -29,6 +29,18 @@
                                         {% endif %}
                                     {% elif puzzle.pregame_code %}
                                         Pregame - Puzzle {{ puzzle.pregame_code.number }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr class="puzzle-solution d-none">
+                                <th>Code</th>
+                                <td class="font-monospace">
+                                    {% if puzzle.code %}
+                                        {{ puzzle.code.code }}
+                                    {% elif puzzle.pregame_code %}
+                                        {{ puzzle.pregame_code.code }}
                                     {% else %}
                                         -
                                     {% endif %}
@@ -72,7 +84,7 @@
                     </table>
                 </div>
 
-                {% bootstrap_button button_type='button' content='Show solution' id='puzzle-solution-button' %}
+                {% bootstrap_button button_type='button' content='Show solution/code' id='puzzle-solution-button' %}
                 {% bootstrap_button button_type='link' href=puzzle.get_update_url content='Change puzzle' %}
                 {% bootstrap_button button_type='link' button_class='btn-danger' href=puzzle.get_delete_url content='Delete puzzle' %}
             </div>
@@ -140,7 +152,7 @@
                     }
                 }
 
-                button.textContent = isHidden ? 'Show solution' : 'Hide solution';
+                button.textContent = isHidden ? 'Show solution/code' : 'Hide solution/code';
             };
 
             button.addEventListener('click', () => {
