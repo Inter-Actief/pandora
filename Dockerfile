@@ -1,5 +1,5 @@
 # Use Python as base image
-FROM python:latest
+FROM python:3.13
 
 # Install dependencies
 RUN apt update && apt install -y build-essential default-libmysqlclient-dev gdal-bin gettext libgraphviz-dev libproj-dev redis

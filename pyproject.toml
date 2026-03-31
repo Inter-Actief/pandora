@@ -3,6 +3,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
+package-mode = false
 name = "pandora"
 version = "1.0.0"
 description = "Website for Inter-Actief Pandora."
