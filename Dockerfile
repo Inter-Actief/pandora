@@ -15,9 +15,11 @@ RUN mkdir -p /srv/app && chown -R worker:worker /srv/app
 WORKDIR /srv/app
 USER worker
 
+# Copy package stub
+COPY --chown=worker:worker pandora/__init__.py /srv/app/pandora/
+
 # Copy pyproject.toml and poetry.lock so Docker can cache dependencies
-COPY --chown=worker:worker pyproject.toml /srv/app
-COPY --chown=worker:worker poetry.lock /srv/app
+COPY --chown=worker:worker LICENSE.md README.md pyproject.toml poetry.lock /srv/app/
 
 # Install app dependencies
 RUN poetry install
