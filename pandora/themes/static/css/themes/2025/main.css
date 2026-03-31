@@ -1,0 +1,47 @@
+body {
+    background-image: url('/static/images/themes/2025/background.png');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.table {
+    --bs-table-color: black;
+    --bs-table-bg: #f7dfab;
+}
+
+.card {
+    background-color: #f7dfab;
+}
+
+.first-letter {
+    color: #0a2463;
+}
+
+/* Logo */
+
+.logo {
+    height: 300px;
+}
+
+.large-logo {
+    max-width: 100vw;
+    height: 80vh;
+    margin-bottom: 10vh;
+}
+
+.large-logo  * {
+    max-width: 100% !important;
+}
+
+.fancy-logo {
+    position: relative;
+    height: 100%;
+    width: auto;
+    align-items: center;
+}
+
+.large-logo .title {
+    max-width: min(600px, 100%)!important;
+    z-index: 1;
+}
