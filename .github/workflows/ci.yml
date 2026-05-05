@@ -40,7 +40,7 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Sanitize repository slug
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         id: repository_slug
         with:
           result-encoding: string
@@ -85,7 +85,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Sanitize repository slug
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         id: repository_slug
         with:
           result-encoding: string
