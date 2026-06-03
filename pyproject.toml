@@ -52,7 +52,7 @@ uvicorn = {extras = ["standard"], version = "^0.48.0"}
 uvicorn-worker = "^0.4.0"
 
 [tool.poetry.group.dev.dependencies]
-daphne = "^4.2.1"
+daphne = "^4.2.2"
 django-debug-toolbar = "^6.3.0"
 django-extensions = "^4.1"
 pygraphviz = { version = "^1.12", platform = "linux" }
