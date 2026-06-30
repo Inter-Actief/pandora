@@ -55,4 +55,4 @@ uvicorn-worker = "^0.4.0"
 daphne = "^4.2.2"
 django-debug-toolbar = "^7.0.0"
 django-extensions = "^4.1"
-pygraphviz = { version = "^1.12", platform = "linux" }
+pygraphviz = { version = "^2.0", platform = "linux" }
