@@ -28,7 +28,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-asgiref = "^3.11.1"
+asgiref = "^3.12.1"
 beautifulsoup4 = "^4.15.0"
 channels = "^4.3.2"
 channels-redis = "^4.3.0"
