@@ -533,14 +533,14 @@ ssh = ["bcrypt (>=3.1.5)"]
 
 [[package]]
 name = "daphne"
-version = "4.2.2"
+version = "4.2.3"
 description = "Django ASGI (HTTP/WebSocket) server"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
 files = [
-    {file = "daphne-4.2.2-py3-none-any.whl", hash = "sha256:466ba8a7c31c5b758953095b451dbad9dc23e5783c68a3716e5fc7aa5f26d168"},
-    {file = "daphne-4.2.2.tar.gz", hash = "sha256:6c3527d4ce32630ae054dfb0ef5578e9a35d2f39f0ebcd02ef4f9129a121ce8d"},
+    {file = "daphne-4.2.3-py3-none-any.whl", hash = "sha256:34442c539a98111f4d8cac98a7204aeeb53811229bd96063e6fbe740e97078c9"},
+    {file = "daphne-4.2.3.tar.gz", hash = "sha256:1c458f81926b37301cadc8ec1b6316d9a5db53fba061fc4826610395fe5d5c81"},
 ]
 
 [package.dependencies]
@@ -2256,4 +2256,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "d66f38918b7edc687d10b4f6a641febf11d64dcd64d51c4ea978b688d0037d81"
+content-hash = "f8c43a6fb7c4f3e0cb8efcf8572776709bdb3337e29496ac781b50a260b695f2"
