@@ -814,26 +814,23 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "gunicorn"
-version = "26.0.0"
+version = "26.1.0"
 description = "WSGI HTTP Server for UNIX"
 optional = false
 python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "gunicorn-26.0.0-py3-none-any.whl", hash = "sha256:40233d26a5f0d1872916188c276e21641155111c2853f0c2cd55260aec0d24fc"},
-    {file = "gunicorn-26.0.0.tar.gz", hash = "sha256:ca9346f85e3a4aeeb64d491045c16b9a35647abd37ea15efe53080eb8b090baf"},
+    {file = "gunicorn-26.1.0-py3-none-any.whl", hash = "sha256:9f45bcddec5e9dc7a25a3bdccb0c6832f11fd5d4739b1ee36c8d2fec25f1dc86"},
+    {file = "gunicorn-26.1.0.tar.gz", hash = "sha256:1413d777bf99d31ebeb08acd354b01f1ecc44db0aa7b811ae7b86c669232e4f7"},
 ]
 
-[package.dependencies]
-packaging = "*"
-
 [package.extras]
-fast = ["gunicorn_h1c (>=0.6.5)"]
-gevent = ["gevent (>=24.10.1)"]
-http2 = ["h2 (>=4.1.0)"]
+fast = ["gunicorn_h1c (>=0.6.6)"]
+gevent = ["gevent (>=24.10.1)", "packaging"]
+http2 = ["h2 (>=4.4.1)"]
 setproctitle = ["setproctitle"]
-testing = ["coverage", "gevent (>=24.10.1)", "h2 (>=4.1.0)", "httpx[http2]", "pytest", "pytest-asyncio", "pytest-cov", "uvloop (>=0.19.0)"]
-tornado = ["tornado (>=6.5.0)"]
+testing = ["coverage", "gevent (>=24.10.1)", "h2 (>=4.4.1)", "httpx[http2] (>=0.23.0)", "inotify (>=0.2.10) ; sys_platform == \"linux\"", "packaging", "pytest (>=9.0.3)", "pytest-asyncio", "pytest-cov", "uvloop (>=0.19.0)"]
+tornado = ["tornado (>=6.5.7)"]
 
 [[package]]
 name = "h11"
@@ -1065,18 +1062,6 @@ files = [
 rsa = ["cryptography (>=3.0.0)"]
 signals = ["blinker (>=1.4.0)"]
 signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
-
-[[package]]
-name = "packaging"
-version = "24.2"
-description = "Core utilities for Python packages"
-optional = false
-python-versions = ">=3.8"
-groups = ["main"]
-files = [
-    {file = "packaging-24.2-py3-none-any.whl", hash = "sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759"},
-    {file = "packaging-24.2.tar.gz", hash = "sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"},
-]
 
 [[package]]
 name = "pillow"
@@ -2253,4 +2238,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "ce83f960361cda54a7d79b393987f72727dcd8e1ed466da02b7ac2e9a014b508"
+content-hash = "8c811dbd9b5544084a4124b52929a323fb172553e36f56efdfd7089f8b55d132"
