@@ -45,7 +45,7 @@ django-request-cache = "^1.4.0"
 gunicorn = "^26.2.0"
 mysqlclient = "^2.3.0"
 pillow = "^12.3.0"
-python-dotenv = "^1.2.3"
+python-dotenv = "^1.2.4"
 pytz = "^2026.4"
 sentry-sdk = "^2.71.0"
 uvicorn = {extras = ["standard"], version = "^0.54.0"}
