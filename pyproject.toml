@@ -47,7 +47,7 @@ mysqlclient = "^2.3.0"
 pillow = "^12.3.0"
 python-dotenv = "^1.2.4"
 pytz = "^2026.5"
-sentry-sdk = "^2.71.0"
+sentry-sdk = "^2.72.0"
 uvicorn = {extras = ["standard"], version = "^0.54.0"}
 uvicorn-worker = "^0.4.0"
 
