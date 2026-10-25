@@ -4,13 +4,16 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    versioning-strategy: increase-if-necessary
 
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "weekly"
-    
+    versioning-strategy: increase-if-necessary
+
   - package-ecosystem: "npm"
     directory: "/bootstrap"
     schedule:
       interval: "weekly"
+    versioning-strategy: increase-if-necessary
