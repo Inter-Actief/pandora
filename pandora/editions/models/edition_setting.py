@@ -1,5 +1,3 @@
-from distutils.util import strtobool
-
 from django.db import models
 from django.urls import reverse
 
@@ -30,7 +28,7 @@ class EditionSetting(BaseModel):
         return default_setting.value if default_setting else None
 
     def as_boolean(self):
-        return strtobool(self.value)
+        return self.value == 'true'
 
     def as_int(self):
         return int(self.value)
